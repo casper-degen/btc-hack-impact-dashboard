@@ -6,8 +6,7 @@ Data is a static snapshot (Apr 17–27, 2026). No backend, no live API calls fro
 
 ## Live Dashboard
 
-> **Deploy to GitHub Pages and replace this line with the URL.**
-> e.g. `https://<your-github-username>.github.io/btc-hack-impact-dashboard/`
+**[https://casper-degen.github.io/btc-hack-impact-dashboard/](https://casper-degen.github.io/btc-hack-impact-dashboard/)**
 
 ## What Happened
 
