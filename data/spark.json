@@ -1,0 +1,533 @@
+{
+  "_meta": {
+    "protocol": "Spark Protocol (SparkLend)",
+    "chains": "Ethereum (BTC markets: WBTC, cbBTC, LBTC, tBTC) \u00b7 Gnosis (no BTC reserves)",
+    "event": "Kelp DAO LayerZero Exploit",
+    "hackDate": "2026-04-18",
+    "fetchedAt": "2026-04-27T01:58:49.617Z",
+    "dataFreshness": "2026-04-27",
+    "sources": {
+      "perMarket": "Spark Lend Ethereum subgraph (The Graph Network) \u2014 per-market BTC data Apr 17\u201327, 2026",
+      "protocolTvl": "DefiLlama API (api.llama.fi/protocol/spark) \u2014 multichain protocol TVL",
+      "note": "Spark is an Aave v3 fork from Sky/MakerDAO ecosystem. BTC collateral INCREASED post-hack as users migrated from Aave."
+    },
+    "subgraphIds": {
+      "Ethereum": "GbKdmBe4ycCYCQLQSjqGg6UHYoYfbyJyq5WrG35pv1si",
+      "Gnosis": "Bw4RH37UbbGEhHo4FaWwT1dn9QJzm1XSZCyK1cbr6ZKM"
+    },
+    "caveats": [
+      "LBTC and tBTC were PRESENT on Spark Lend Ethereum pre-hack (Apr 17) \u2014 subgraph missed them due to late deployment",
+      "Subgraph Apr17 daily snapshot only captured WBTC=142.40 + cbBTC=396.39 = 538.79 BTC \u2014 missing LBTC=1651.88 + tBTC=22.53",
+      "On-chain verification (publicnode archive RPC, block 24903024 = Apr18 00:00 UTC) confirms true pre-hack total = 2213.21 BTC",
+      "Spark current subgraph data (Apr19+) is accurate \u2014 on-chain vs subgraph differ by <0.01% for Apr27",
+      "Gnosis SparkLend: confirmed live but no BTC reserves",
+      "Spark BTC TVL GREW post-hack (users migrated from Aave) \u2014 Total Loss field shows a gain"
+    ],
+    "verification_block17": {
+      "method": "on-chain archive RPC (publicnode.com) at block 24903024 = Apr18 00:00:11 UTC (= end of Apr17 / pre-hack state)",
+      "block": 24903024,
+      "ts": "2026-04-18T00:00:11Z",
+      "note": "aToken.totalSupply() queried for each BTC market. Block 24903024 = first block of Apr18 = state right before hack.",
+      "wbtc": 142.4023864,
+      "cbbtc": 396.3916065,
+      "lbtc": 1651.88399406,
+      "tbtc": 22.53067028,
+      "total_rpc": 2213.2086572,
+      "source_2_defillama": {
+        "date": "2026-04-17",
+        "note": "DefiLlama tokensInUsd Apr17 global \u2014 WBTC+cbBTC mostly Ethereum",
+        "wbtc_usd": 23102450.19607,
+        "cbbtc_usd": 62013694.44885,
+        "lbtc_usd": 124244769.44463,
+        "tbtcv2_usd": 1689485.26257,
+        "total_usd_global": 211050399.35582
+      },
+      "source_3_rpc_april17_midnight": {
+        "block": 24895843,
+        "ts": "2026-04-17T00:00:23Z",
+        "note": "Apr17 00:00 UTC state \u2014 170 WBTC + 500 cbBTC withdrew during Apr17 daytime (real on-chain, pre-hack)",
+        "wbtc": 312.64091505,
+        "cbbtc": 896.39184807,
+        "lbtc": 1651.88399406,
+        "tbtc": 22.53067028,
+        "total": 2883.44742746
+      },
+      "verdict": "Subgraph pre-hack 538.79 BTC was INCOMPLETE \u2014 missed LBTC=1651.88 + tBTC=22.53. WBTC and cbBTC values correct for end-of-day Apr17. True pre-hack (end Apr17) = 2213.21 BTC. On-chain and corrected-subgraph agree to <0.01%."
+    }
+  },
+  "keyMetrics": {
+    "preHack": {
+      "date": "2026-04-17",
+      "label": "Pre-Hack (Apr 17)",
+      "tvlUsd": 3854306879.45293
+    },
+    "trough": {
+      "date": "2026-04-19",
+      "label": "Trough (2026-04-19)",
+      "tvlUsd": 3726675950.18881,
+      "dropUsd": -127630929.2641201,
+      "dropPct": -3.3
+    },
+    "current": {
+      "date": "2026-04-27",
+      "label": "Current (2026-04-27)",
+      "tvlUsd": 5231533418.87263,
+      "dropFromPreHackUsd": 1377226539.4197001,
+      "dropFromPreHackPct": 35.7
+    },
+    "btcMarkets": {
+      "note": "All BTC-collateral markets on Spark Lend Ethereum. WBTC+cbBTC from subgraph (verified correct); LBTC+tBTC pre-hack from on-chain archive RPC (block 24903024 = Apr18 00:00 UTC).",
+      "preHackBtc": 2213.21,
+      "preHackUsd": 167684187,
+      "preHackDate": "2026-04-17",
+      "troughBtc": 2213.21,
+      "troughUsd": 167684187,
+      "troughDate": "2026-04-17",
+      "currentBtc": 8784.13,
+      "currentUsd": 687203304,
+      "currentDate": "2026-04-27",
+      "dropBtc": 6570.92,
+      "dropUsd": 519519117,
+      "dropPct": 296.9,
+      "source": "spark-lend-ethereum-subgraph + on-chain-rpc-verification",
+      "narrative": "Spark GAINED BTC collateral post-hack as users migrated from Aave. Pre-hack: ~$168M BTC (~5.8% of $3.85B TVL). Current: $687M BTC."
+    }
+  },
+  "protocolTvlTimeline": [
+    {
+      "date": "2026-04-17",
+      "totalUsd": 3854306879.45293
+    },
+    {
+      "date": "2026-04-18",
+      "totalUsd": 3861257798.5109997
+    },
+    {
+      "date": "2026-04-19",
+      "totalUsd": 3726675950.18881
+    },
+    {
+      "date": "2026-04-20",
+      "totalUsd": 4059323097.59608
+    },
+    {
+      "date": "2026-04-21",
+      "totalUsd": 4405164819.016809
+    },
+    {
+      "date": "2026-04-22",
+      "totalUsd": 4734655206.31915
+    },
+    {
+      "date": "2026-04-23",
+      "totalUsd": 5015774050.558471
+    },
+    {
+      "date": "2026-04-24",
+      "totalUsd": 5098693701.32617
+    },
+    {
+      "date": "2026-04-25",
+      "totalUsd": 5098607855.48623
+    },
+    {
+      "date": "2026-04-26",
+      "totalUsd": 5097188807.76805
+    },
+    {
+      "date": "2026-04-27",
+      "totalUsd": 5231533418.87263
+    }
+  ],
+  "btcDailyTimeline": {
+    "WBTC": {
+      "2026-04-17": {
+        "date": "2026-04-17",
+        "deposits_btc": 142.40238328,
+        "deposits_usd": 11055725.78295612,
+        "borrows_usd": 324108.72321424715,
+        "net_usd": 10731617.059741873,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-18": {
+        "date": "2026-04-18",
+        "deposits_btc": 184.82471904,
+        "deposits_usd": 13994261.445299665,
+        "borrows_usd": 316091.02584618295,
+        "net_usd": 13678170.419453481,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-19": {
+        "date": "2026-04-19",
+        "deposits_btc": 708.88502099,
+        "deposits_usd": 52234690.11517802,
+        "borrows_usd": 307613.90416261245,
+        "net_usd": 51927076.2110154,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-20": {
+        "date": "2026-04-20",
+        "deposits_btc": 1669.51186176,
+        "deposits_usd": 126008433.35836568,
+        "borrows_usd": 315088.81617238204,
+        "net_usd": 125693344.54219331,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-21": {
+        "date": "2026-04-21",
+        "deposits_btc": 2806.04185057,
+        "deposits_usd": 213422479.18061623,
+        "borrows_usd": 317518.46412434796,
+        "net_usd": 213104960.71649188,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-22": {
+        "date": "2026-04-22",
+        "deposits_btc": 2942.99998444,
+        "deposits_usd": 231970708.33800617,
+        "borrows_usd": 329053.03842806077,
+        "net_usd": 231641655.2995781,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-23": {
+        "date": "2026-04-23",
+        "deposits_btc": 2942.99998439,
+        "deposits_usd": 226681045.110581,
+        "borrows_usd": 321549.61676364543,
+        "net_usd": 226359495.49381736,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-24": {
+        "date": "2026-04-24",
+        "deposits_btc": 2942.62026059,
+        "deposits_usd": 227904716.00054392,
+        "borrows_usd": 323327.18111013394,
+        "net_usd": 227581388.81943378,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-25": {
+        "date": "2026-04-25",
+        "deposits_btc": 2942.94122006,
+        "deposits_usd": 228291172.28316867,
+        "borrows_usd": 323840.1526806149,
+        "net_usd": 227967332.13048807,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-26": {
+        "date": "2026-04-26",
+        "deposits_btc": 2942.99998404,
+        "deposits_usd": 229065063.48820522,
+        "borrows_usd": 324931.5107220092,
+        "net_usd": 228740131.9774832,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-27": {
+        "date": "2026-04-27",
+        "deposits_btc": 2942.99998404,
+        "deposits_usd": 229065063.48820522,
+        "borrows_usd": 324931.5107220092,
+        "net_usd": 228740131.9774832,
+        "source": "spark-lend-ethereum-current-state"
+      }
+    },
+    "LBTC": {
+      "2026-04-19": {
+        "date": "2026-04-19",
+        "deposits_btc": 2788.57783253,
+        "deposits_usd": 210700705.1762392,
+        "borrows_usd": 0,
+        "net_usd": 210700705.1762392,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-20": {
+        "date": "2026-04-20",
+        "deposits_btc": 3172.93502189,
+        "deposits_usd": 241704068.30486038,
+        "borrows_usd": 0,
+        "net_usd": 241704068.30486038,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-21": {
+        "date": "2026-04-21",
+        "deposits_btc": 3194.31106162,
+        "deposits_usd": 240559749.57079786,
+        "borrows_usd": 0,
+        "net_usd": 240559749.57079786,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-22": {
+        "date": "2026-04-22",
+        "deposits_btc": 3307.93430454,
+        "deposits_usd": 260565895.37143117,
+        "borrows_usd": 0,
+        "net_usd": 260565895.37143117,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-23": {
+        "date": "2026-04-23",
+        "deposits_btc": 3371.01155385,
+        "deposits_usd": 260617338.29150504,
+        "borrows_usd": 0,
+        "net_usd": 260617338.29150504,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-24": {
+        "date": "2026-04-24",
+        "deposits_btc": 3388.23507478,
+        "deposits_usd": 265150096.7178419,
+        "borrows_usd": 0,
+        "net_usd": 265150096.7178419,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-25": {
+        "date": "2026-04-25",
+        "deposits_btc": 3405.50393659,
+        "deposits_usd": 263346013.8916738,
+        "borrows_usd": 0,
+        "net_usd": 263346013.8916738,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-26": {
+        "date": "2026-04-26",
+        "deposits_btc": 3360.30393659,
+        "deposits_usd": 262528927.89921275,
+        "borrows_usd": 0,
+        "net_usd": 262528927.89921275,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-27": {
+        "date": "2026-04-27",
+        "deposits_btc": 3360.30393659,
+        "deposits_usd": 262528927.89921275,
+        "borrows_usd": 0,
+        "net_usd": 262528927.89921275,
+        "source": "spark-lend-ethereum-current-state"
+      },
+      "2026-04-17": {
+        "date": "2026-04-17",
+        "deposits_btc": 1651.88399406,
+        "deposits_usd": 124244769.44463,
+        "borrows_usd": 0,
+        "net_usd": 124244769.44463,
+        "source": "on-chain-rpc-verified-block-24903024",
+        "note": "Subgraph missed Apr17 LBTC. Verified via publicnode archive RPC block 24903024 (Apr18 00:00 UTC = pre-hack state)."
+      },
+      "2026-04-18": {
+        "date": "2026-04-18",
+        "deposits_btc": 1651.88399406,
+        "deposits_usd": 124244769.44463,
+        "borrows_usd": 0,
+        "net_usd": 124244769.44463,
+        "source": "on-chain-rpc-verified-block-24903024",
+        "note": "Same as Apr17 \u2014 LBTC unchanged on hack day. Subgraph also missed Apr18 LBTC."
+      }
+    },
+    "cbBTC": {
+      "2026-04-17": {
+        "date": "2026-04-17",
+        "deposits_btc": 396.39158811,
+        "deposits_usd": 30694206.053289145,
+        "borrows_usd": 5579437.748238921,
+        "net_usd": 25114768.305050224,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-18": {
+        "date": "2026-04-18",
+        "deposits_btc": 405.70216883,
+        "deposits_usd": 30775059.343886595,
+        "borrows_usd": 5465785.680161036,
+        "net_usd": 25309273.66372556,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-19": {
+        "date": "2026-04-19",
+        "deposits_btc": 790.0509446,
+        "deposits_usd": 58393212.334967285,
+        "borrows_usd": 5265665.310314146,
+        "net_usd": 53127547.02465314,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-20": {
+        "date": "2026-04-20",
+        "deposits_btc": 1527.92106705,
+        "deposits_usd": 116569510.73112303,
+        "borrows_usd": 5664272.45020676,
+        "net_usd": 110905238.28091627,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-21": {
+        "date": "2026-04-21",
+        "deposits_btc": 1909.15770411,
+        "deposits_usd": 144725377.73069692,
+        "borrows_usd": 5681187.297733503,
+        "net_usd": 139044190.4329634,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-22": {
+        "date": "2026-04-22",
+        "deposits_btc": 2263.81567163,
+        "deposits_usd": 178320699.0007549,
+        "borrows_usd": 7804213.183781427,
+        "net_usd": 170516485.81697348,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-23": {
+        "date": "2026-04-23",
+        "deposits_btc": 2402.09880513,
+        "deposits_usd": 187418152.67864782,
+        "borrows_usd": 7206128.425490321,
+        "net_usd": 180212024.2531575,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-24": {
+        "date": "2026-04-24",
+        "deposits_btc": 2426.11287023,
+        "deposits_usd": 188092867.39849785,
+        "borrows_usd": 7004663.599114685,
+        "net_usd": 181088203.79938316,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-25": {
+        "date": "2026-04-25",
+        "deposits_btc": 2457.05775233,
+        "deposits_usd": 190018281.21686718,
+        "borrows_usd": 7292729.461838925,
+        "net_usd": 182725551.75502825,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-26": {
+        "date": "2026-04-26",
+        "deposits_btc": 2456.79044466,
+        "deposits_usd": 191902324.68619087,
+        "borrows_usd": 7367667.071009351,
+        "net_usd": 184534657.61518154,
+        "source": "spark-lend-ethereum-subgraph"
+      },
+      "2026-04-27": {
+        "date": "2026-04-27",
+        "deposits_btc": 2458.29046123,
+        "deposits_usd": 194067282.17134112,
+        "borrows_usd": 7446241.24488768,
+        "net_usd": 186621040.92645344,
+        "source": "spark-lend-ethereum-subgraph"
+      }
+    },
+    "tBTC": {
+      "2026-04-27": {
+        "date": "2026-04-27",
+        "deposits_btc": 22.530657243030838,
+        "deposits_usd": 1542030.8511660332,
+        "borrows_usd": 8.30136808634098,
+        "net_usd": 1542022.5497979468,
+        "source": "spark-lend-ethereum-current-state"
+      },
+      "2026-04-17": {
+        "date": "2026-04-17",
+        "deposits_btc": 22.53065724303,
+        "deposits_usd": 1689485.26257,
+        "borrows_usd": 8.30136808634098,
+        "net_usd": 1689476.96120191,
+        "source": "on-chain-rpc-verified-block-24903024",
+        "note": "Subgraph missed Apr17 tBTC. Verified via publicnode archive RPC block 24903024 (Apr18 00:00 UTC)."
+      }
+    }
+  },
+  "perMarketSnapshot": {
+    "snapshotDates": {
+      "preHack": "2026-04-17",
+      "current": "2026-04-27"
+    },
+    "note": "BTC markets on Spark Lend Ethereum. WBTC+cbBTC pre-hack from subgraph (verified correct via on-chain). LBTC+tBTC pre-hack from on-chain archive RPC (subgraph missed these markets for Apr17).",
+    "markets": [
+      {
+        "chain": "Ethereum",
+        "asset": "WBTC",
+        "decimals": 8,
+        "isBtc": true,
+        "underlyingAsset": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "marketId": "0x4197ba364ae6698015ae5c1468f54087602715b2",
+        "preDepositBtc": 142.40238328,
+        "preDepositUsd": 11055725.78295612,
+        "troughDepositBtc": 142.40238328,
+        "currentDepositBtc": 2942.99998404,
+        "currentDepositUsd": 229065063.48820522,
+        "dropPct": 1966.7,
+        "source": "spark-lend-ethereum-subgraph",
+        "troughDate": "2026-04-17"
+      },
+      {
+        "chain": "Ethereum",
+        "asset": "LBTC",
+        "decimals": 8,
+        "isBtc": true,
+        "underlyingAsset": "0x8236a87084f8b84306f72007f36f2618a5634494",
+        "marketId": "0xa9d4ecebd48c282a70cfd3c469d6c8f178a5738e",
+        "preDepositBtc": 1651.88399406,
+        "preDepositUsd": 124244769.44463,
+        "troughDepositBtc": 1651.88399406,
+        "currentDepositBtc": 3360.30393659,
+        "currentDepositUsd": 262528927.89921275,
+        "dropPct": 103.4,
+        "source": "on-chain-rpc-verified-block-24903024",
+        "note": "Pre-hack value from on-chain archive RPC (block 24903024 = Apr18 00:00 UTC). Subgraph missed Apr17 LBTC data \u2014 first subgraph snapshot was Apr19.",
+        "troughDate": "2026-04-17"
+      },
+      {
+        "chain": "Ethereum",
+        "asset": "cbBTC",
+        "decimals": 8,
+        "isBtc": true,
+        "underlyingAsset": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+        "marketId": "0xb3973d459df38ae57797811f2a1fd061da1bc123",
+        "preDepositBtc": 396.39158811,
+        "preDepositUsd": 30694206.053289145,
+        "troughDepositBtc": 396.39158811,
+        "currentDepositBtc": 2458.29046123,
+        "currentDepositUsd": 194067282.17134112,
+        "dropPct": 520.2,
+        "source": "spark-lend-ethereum-subgraph",
+        "troughDate": "2026-04-17"
+      },
+      {
+        "chain": "Ethereum",
+        "asset": "tBTC",
+        "decimals": 18,
+        "isBtc": true,
+        "underlyingAsset": "0x18084fba666a33d37592fa2633fd49a74dd93a88",
+        "marketId": "0xce6ca9cdce00a2b0c0d1dac93894f4bd2c960567",
+        "preDepositBtc": 22.53065724303,
+        "preDepositUsd": 1689485.26257,
+        "troughDepositBtc": 22.53065724303,
+        "currentDepositBtc": 22.530657243030838,
+        "currentDepositUsd": 1542030.8511660332,
+        "dropPct": 0.0,
+        "source": "on-chain-rpc-verified-block-24903024",
+        "note": "Pre-hack value from on-chain archive RPC (block 24903024 = Apr18 00:00 UTC). Subgraph missed Apr17 tBTC data.",
+        "troughDate": "2026-04-17"
+      }
+    ]
+  },
+  "chainBreakdown": {
+    "Ethereum": {
+      "status": "ok",
+      "subgraphId": "GbKdmBe4ycCYCQLQSjqGg6UHYoYfbyJyq5WrG35pv1si",
+      "schema": "messari-standard",
+      "btcMarkets": [
+        "WBTC",
+        "LBTC",
+        "cbBTC",
+        "tBTC"
+      ],
+      "currentBtc": 8784.13,
+      "currentUsd": 687203304,
+      "preHackBtc": 2213.21,
+      "note": "Main Spark Lend deployment with all BTC collateral. Pre-hack values verified via on-chain archive RPC.",
+      "preHackUsd": 167684187
+    },
+    "Gnosis": {
+      "status": "no_btc_reserves",
+      "subgraphId": "Bw4RH37UbbGEhHo4FaWwT1dn9QJzm1XSZCyK1cbr6ZKM",
+      "note": "Confirmed live but no BTC reserves"
+    }
+  }
+}

@@ -1,0 +1,548 @@
+{
+  "_meta": {
+    "protocol": "Morpho Blue",
+    "chains": [
+      "Ethereum",
+      "Base",
+      "Arbitrum One",
+      "OP Mainnet",
+      "Polygon",
+      "Scroll",
+      "Fraxtal"
+    ],
+    "event": "Kelp DAO LayerZero Exploit",
+    "hackDate": "2026-04-18",
+    "fetchedAt": "2026-04-26T22:27:33.826Z",
+    "dataFreshness": "2026-04-26",
+    "marketsAnalyzed": 27,
+    "source": "Morpho Blue official GraphQL API (blue-api.morpho.org/graphql)"
+  },
+  "keyMetrics": {
+    "preHack": {
+      "date": "2026-04-18",
+      "label": "Pre-Hack (Apr 18)",
+      "btc": 43797.38,
+      "usd": 3378275613
+    },
+    "trough": {
+      "date": "2026-04-20",
+      "label": "Trough (Apr 20)",
+      "btc": 41049.44,
+      "usd": 3036503751,
+      "dropBtc": -2747.94,
+      "dropPct": -6.3
+    },
+    "current": {
+      "date": "2026-04-26",
+      "label": "Current (Apr 26)",
+      "btc": 42899.99,
+      "usd": 3327928388,
+      "dropFromPreHackBtc": -897.39,
+      "dropFromPreHackPct": -2,
+      "recoveryBtc": 1850.55,
+      "recoveryPct": 67.3
+    }
+  },
+  "dailyTimeline": {
+    "2026-04-17": {
+      "btc": 44126.63,
+      "usd": 3313589747,
+      "supplyUsd": 1884117232
+    },
+    "2026-04-18": {
+      "btc": 43797.38,
+      "usd": 3378275613,
+      "supplyUsd": 1898779636
+    },
+    "2026-04-19": {
+      "btc": 43613.6,
+      "usd": 3303088204,
+      "supplyUsd": 1845813274
+    },
+    "2026-04-20": {
+      "btc": 41049.44,
+      "usd": 3036503751,
+      "supplyUsd": 1770300918
+    },
+    "2026-04-21": {
+      "btc": 41538.54,
+      "usd": 3149239354,
+      "supplyUsd": 1789475114
+    },
+    "2026-04-22": {
+      "btc": 41956.28,
+      "usd": 3199509173,
+      "supplyUsd": 1829673302
+    },
+    "2026-04-23": {
+      "btc": 42273.45,
+      "usd": 3305560998,
+      "supplyUsd": 1797649026
+    },
+    "2026-04-24": {
+      "btc": 42613.7,
+      "usd": 3332249474,
+      "supplyUsd": 1827826816
+    },
+    "2026-04-25": {
+      "btc": 42766.2,
+      "usd": 3309560721,
+      "supplyUsd": 1849548604
+    },
+    "2026-04-26": {
+      "btc": 42899.99,
+      "usd": 3327928388,
+      "supplyUsd": 1849476472
+    }
+  },
+  "perChain": {
+    "Base": {
+      "chainId": 8453,
+      "daily": {
+        "2026-04-17": {
+          "btc": 28648.19,
+          "usd": 2151673258
+        },
+        "2026-04-18": {
+          "btc": 28695.16,
+          "usd": 2214256149
+        },
+        "2026-04-19": {
+          "btc": 28737.91,
+          "usd": 2176640185
+        },
+        "2026-04-20": {
+          "btc": 29142.19,
+          "usd": 2157522234
+        },
+        "2026-04-21": {
+          "btc": 29291.79,
+          "usd": 2221745769
+        },
+        "2026-04-22": {
+          "btc": 29359.94,
+          "usd": 2241525892
+        },
+        "2026-04-23": {
+          "btc": 29417.76,
+          "usd": 2301082839
+        },
+        "2026-04-24": {
+          "btc": 29507.93,
+          "usd": 2307886536
+        },
+        "2026-04-25": {
+          "btc": 29593.02,
+          "usd": 2291098426
+        },
+        "2026-04-26": {
+          "btc": 29620.8,
+          "usd": 2298260819
+        }
+      }
+    },
+    "Ethereum": {
+      "chainId": 1,
+      "daily": {
+        "2026-04-17": {
+          "btc": 15097.55,
+          "usd": 1133384027
+        },
+        "2026-04-18": {
+          "btc": 14723.64,
+          "usd": 1134862729
+        },
+        "2026-04-19": {
+          "btc": 14496.98,
+          "usd": 1097825963
+        },
+        "2026-04-20": {
+          "btc": 11535.8,
+          "usd": 851601904
+        },
+        "2026-04-21": {
+          "btc": 11864.58,
+          "usd": 898595880
+        },
+        "2026-04-22": {
+          "btc": 12209.72,
+          "usd": 928625375
+        },
+        "2026-04-23": {
+          "btc": 12516.82,
+          "usd": 978039043
+        },
+        "2026-04-24": {
+          "btc": 12758.73,
+          "usd": 997304137
+        },
+        "2026-04-25": {
+          "btc": 12826.24,
+          "usd": 991674781
+        },
+        "2026-04-26": {
+          "btc": 12929.45,
+          "usd": 1002612054
+        }
+      }
+    },
+    "OP Mainnet": {
+      "chainId": 10,
+      "daily": {
+        "2026-04-17": {
+          "btc": 144.21,
+          "usd": 10809393
+        },
+        "2026-04-18": {
+          "btc": 144.41,
+          "usd": 11115595
+        },
+        "2026-04-19": {
+          "btc": 144.38,
+          "usd": 10920665
+        },
+        "2026-04-20": {
+          "btc": 139.61,
+          "usd": 10291766
+        },
+        "2026-04-21": {
+          "btc": 141.61,
+          "usd": 10711202
+        },
+        "2026-04-22": {
+          "btc": 137.33,
+          "usd": 10460204
+        },
+        "2026-04-23": {
+          "btc": 139.26,
+          "usd": 10862584
+        },
+        "2026-04-24": {
+          "btc": 147.41,
+          "usd": 11502523
+        },
+        "2026-04-25": {
+          "btc": 147.41,
+          "usd": 11380210
+        },
+        "2026-04-26": {
+          "btc": 147.41,
+          "usd": 11401611
+        }
+      }
+    },
+    "Arbitrum One": {
+      "chainId": 42161,
+      "daily": {
+        "2026-04-17": {
+          "btc": 93.65,
+          "usd": 7014507
+        },
+        "2026-04-18": {
+          "btc": 93.65,
+          "usd": 7201889
+        },
+        "2026-04-19": {
+          "btc": 93.81,
+          "usd": 7091137
+        },
+        "2026-04-20": {
+          "btc": 96.67,
+          "usd": 7112814
+        },
+        "2026-04-21": {
+          "btc": 104.11,
+          "usd": 7872034
+        },
+        "2026-04-22": {
+          "btc": 112.6,
+          "usd": 8495483
+        },
+        "2026-04-23": {
+          "btc": 122.94,
+          "usd": 9594844
+        },
+        "2026-04-24": {
+          "btc": 125.39,
+          "usd": 9764868
+        },
+        "2026-04-25": {
+          "btc": 124.24,
+          "usd": 9598375
+        },
+        "2026-04-26": {
+          "btc": 126.09,
+          "usd": 9751906
+        }
+      }
+    },
+    "Polygon": {
+      "chainId": 137,
+      "daily": {
+        "2026-04-17": {
+          "btc": 143.01,
+          "usd": 10708562
+        },
+        "2026-04-18": {
+          "btc": 140.51,
+          "usd": 10839252
+        },
+        "2026-04-19": {
+          "btc": 140.51,
+          "usd": 10610253
+        },
+        "2026-04-20": {
+          "btc": 135.18,
+          "usd": 9975033
+        },
+        "2026-04-21": {
+          "btc": 136.45,
+          "usd": 10314468
+        },
+        "2026-04-22": {
+          "btc": 136.68,
+          "usd": 10402220
+        },
+        "2026-04-23": {
+          "btc": 76.67,
+          "usd": 5981688
+        },
+        "2026-04-24": {
+          "btc": 74.24,
+          "usd": 5791409
+        },
+        "2026-04-25": {
+          "btc": 75.29,
+          "usd": 5808928
+        },
+        "2026-04-26": {
+          "btc": 76.24,
+          "usd": 5901998
+        }
+      }
+    }
+  },
+  "topMarkets": [
+    {
+      "key": "0x9103c3b4e83447...",
+      "chainName": "Base",
+      "collateral": "cbBTC",
+      "loan": "USDC",
+      "preHackBtc": 28556.4,
+      "preHackUsd": 0,
+      "troughBtc": 29007.39,
+      "troughDropBtc": 450.99,
+      "troughDropPct": 1.6,
+      "currentBtc": 29483.95,
+      "currentUsd": 0,
+      "highlight": null
+    },
+    {
+      "key": "0x64d65c9a2d91c3...",
+      "chainName": "Ethereum",
+      "collateral": "cbBTC",
+      "loan": "USDC",
+      "preHackBtc": 7055.04,
+      "preHackUsd": 0,
+      "troughBtc": 6097.79,
+      "troughDropBtc": -957.25,
+      "troughDropPct": -13.6,
+      "currentBtc": 6508.03,
+      "currentUsd": 0,
+      "highlight": null
+    },
+    {
+      "key": "0xd8a8e6667f58aa...",
+      "chainName": "Ethereum",
+      "collateral": "cbBTC",
+      "loan": "PYUSD",
+      "preHackBtc": 2985.63,
+      "preHackUsd": 0,
+      "troughBtc": 65.49,
+      "troughDropBtc": -2920.14,
+      "troughDropPct": -97.8,
+      "currentBtc": 141.96,
+      "currentUsd": 0,
+      "highlight": "exploit-epicenter"
+    },
+    {
+      "key": "0x3a85e619751152...",
+      "chainName": "Ethereum",
+      "collateral": "WBTC",
+      "loan": "USDC",
+      "preHackBtc": 2479.64,
+      "preHackUsd": 0,
+      "troughBtc": 3163.14,
+      "troughDropBtc": 683.5,
+      "troughDropPct": 27.6,
+      "currentBtc": 3742.4,
+      "currentUsd": 0,
+      "highlight": null
+    },
+    {
+      "key": "0xa921ef34e2fc7a...",
+      "chainName": "Ethereum",
+      "collateral": "WBTC",
+      "loan": "USDT",
+      "preHackBtc": 1112.17,
+      "preHackUsd": 0,
+      "troughBtc": 1095.31,
+      "troughDropBtc": -16.86,
+      "troughDropPct": -1.5,
+      "currentBtc": 1260.83,
+      "currentUsd": 0,
+      "highlight": null
+    },
+    {
+      "key": "0x45671fb8d5dea1...",
+      "chainName": "Ethereum",
+      "collateral": "cbBTC",
+      "loan": "USDT",
+      "preHackBtc": 300.96,
+      "preHackUsd": 0,
+      "troughBtc": 288.14,
+      "troughDropBtc": -12.82,
+      "troughDropPct": -4.3,
+      "currentBtc": 190.59,
+      "currentUsd": 0,
+      "highlight": null
+    },
+    {
+      "key": "0x8e77af0efaf4a3...",
+      "chainName": "OP Mainnet",
+      "collateral": "WBTC",
+      "loan": "USDC",
+      "preHackBtc": 144.41,
+      "preHackUsd": 0,
+      "troughBtc": 139.61,
+      "troughDropBtc": -4.8,
+      "troughDropPct": -3.3,
+      "currentBtc": 147.41,
+      "currentUsd": 0,
+      "highlight": null
+    },
+    {
+      "key": "0xff527fe9c6516f...",
+      "chainName": "Ethereum",
+      "collateral": "WBTC",
+      "loan": "EURC",
+      "preHackBtc": 135.94,
+      "preHackUsd": 0,
+      "troughBtc": 136.24,
+      "troughDropBtc": 0.3,
+      "troughDropPct": 0.2,
+      "currentBtc": 85.2,
+      "currentUsd": 0,
+      "highlight": null
+    },
+    {
+      "key": "0x67ebd84b2fb39e...",
+      "chainName": "Base",
+      "collateral": "cbBTC",
+      "loan": "EURC",
+      "preHackBtc": 134.67,
+      "preHackUsd": 0,
+      "troughBtc": 130.72,
+      "troughDropBtc": -3.94,
+      "troughDropPct": -2.9,
+      "currentBtc": 131.26,
+      "currentUsd": 0,
+      "highlight": null
+    },
+    {
+      "key": "0xf6a056627a51e5...",
+      "chainName": "Ethereum",
+      "collateral": "LBTC",
+      "loan": "WBTC",
+      "preHackBtc": 117.14,
+      "preHackUsd": 0,
+      "troughBtc": 117.32,
+      "troughDropBtc": 0.18,
+      "troughDropPct": 0.2,
+      "currentBtc": 70.51,
+      "currentUsd": 0,
+      "highlight": null
+    },
+    {
+      "key": "0x96e62bd7549300...",
+      "chainName": "Polygon",
+      "collateral": "WBTC",
+      "loan": "WPOL",
+      "preHackBtc": 103.98,
+      "preHackUsd": 0,
+      "troughBtc": 100.48,
+      "troughDropBtc": -3.5,
+      "troughDropPct": -3.4,
+      "currentBtc": 40.66,
+      "currentUsd": 0,
+      "highlight": null
+    },
+    {
+      "key": "0x6a7e36eb088bd5...",
+      "chainName": "Ethereum",
+      "collateral": "LBTC",
+      "loan": "PYUSD",
+      "preHackBtc": 101,
+      "preHackUsd": 0,
+      "troughBtc": 101,
+      "troughDropBtc": 0,
+      "troughDropPct": 0,
+      "currentBtc": 300.27,
+      "currentUsd": 0,
+      "highlight": null
+    }
+  ],
+  "highlight_cbBTC_PYUSD": {
+    "title": "cbBTC/PYUSD (Ethereum) — Exploit Epicenter",
+    "chainName": "Ethereum",
+    "collateral": "cbBTC",
+    "loan": "PYUSD",
+    "preHackBtc": 2986,
+    "troughBtc": 65,
+    "dropBtc": -2921,
+    "dropPct": -97.8,
+    "context": "The Kelp DAO LayerZero exploit triggered mass liquidations in this market. rsETH depeg caused cbBTC collateral to be liquidated to repay PYUSD loans. 97.8% of the collateral BTC exited this market in 48 hours."
+  },
+  "protocolTvlTimeline": [
+    {
+      "date": "2026-04-17",
+      "totalUsd": 7555240197
+    },
+    {
+      "date": "2026-04-18",
+      "totalUsd": 7652806969
+    },
+    {
+      "date": "2026-04-19",
+      "totalUsd": 7212285092
+    },
+    {
+      "date": "2026-04-20",
+      "totalUsd": 6572973542
+    },
+    {
+      "date": "2026-04-21",
+      "totalUsd": 6512175939
+    },
+    {
+      "date": "2026-04-22",
+      "totalUsd": 6577139493
+    },
+    {
+      "date": "2026-04-23",
+      "totalUsd": 6677951389
+    },
+    {
+      "date": "2026-04-24",
+      "totalUsd": 6659494543
+    },
+    {
+      "date": "2026-04-25",
+      "totalUsd": 6715448841
+    },
+    {
+      "date": "2026-04-26",
+      "totalUsd": 6803806737
+    }
+  ]
+}

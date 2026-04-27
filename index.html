@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BTC TVL Impact — Kelp DAO LayerZero Exploit (Apr 18, 2026)</title>
+<style>
+/* ---- CSS Custom Properties ---- */
+:root {
+  --bg: #fafafa;
+  --bg-card: #ffffff;
+  --bg-thead: #f8fafc;
+  --bg-tfoot: #f8fafc;
+  --bg-table-row-hover: #f1f5f9;
+  --bg-epic: #fff5f5;
+  --border: #e5e7eb;
+  --border-td: #f1f5f9;
+  --text-h1: #0f172a;
+  --text-body: #334155;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #6b7280;
+  --text-th: #6b7280;
+  --text-td: #374151;
+  --text-td-first: #111827;
+  --text-footer: #9ca3af;
+  --accent-red: #dc2626;
+  --accent-green: #059669;
+  --accent-yellow: #d97706;
+  --badge-red-bg: #fee2e2;
+  --badge-red-text: #991b1b;
+  --badge-blue-bg: #dbeafe;
+  --badge-blue-text: #1e40af;
+  --tab-active-text: #0f172a;
+  --tab-inactive-text: #9ca3af;
+  --tab-hover-text: #475569;
+  --tab-active-border: #2563eb;
+  --section-title-color: #6b7280;
+  --chart-grid: #e5e7eb;
+  --chart-axis: #9ca3af;
+  --kpi-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+[data-theme="dark"] {
+  --bg: #0d0d0f;
+  --bg-card: #131318;
+  --bg-thead: #0f0f15;
+  --bg-tfoot: #0f0f15;
+  --bg-table-row-hover: #1a1a24;
+  --bg-epic: #180808;
+  --border: #1e1e2e;
+  --border-td: #0d0d11;
+  --text-h1: #f8fafc;
+  --text-body: #e2e8f0;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --text-th: #475569;
+  --text-td: #cbd5e1;
+  --text-td-first: #f1f5f9;
+  --text-footer: #334155;
+  --accent-red: #f87171;
+  --accent-green: #34d399;
+  --accent-yellow: #fbbf24;
+  --badge-red-bg: #7f1d1d;
+  --badge-red-text: #fca5a5;
+  --badge-blue-bg: #1e3a5f;
+  --badge-blue-text: #93c5fd;
+  --tab-active-text: #f1f5f9;
+  --tab-inactive-text: #64748b;
+  --tab-hover-text: #94a3b8;
+  --tab-active-border: #3b82f6;
+  --section-title-color: #94a3b8;
+  --chart-grid: #1e1e2e;
+  --chart-axis: #334155;
+  --kpi-shadow: none;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text-body);
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 32px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+h1 { font-size: 22px; font-weight: 700; color: var(--text-h1); margin-bottom: 4px; }
+.subtitle { color: var(--text-muted); font-size: 13px; margin-bottom: 0; }
+.badge {
+  display: inline-block; background: var(--badge-red-bg); color: var(--badge-red-text);
+  font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px;
+  margin-left: 8px; vertical-align: middle;
+}
+.badge-blue {
+  display: inline-block; background: var(--badge-blue-bg); color: var(--badge-blue-text);
+  font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px;
+  margin-left: 8px; vertical-align: middle;
+}
+
+/* Header row with toggle */
+.header-row {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 24px;
+}
+.header-row > div { flex: 1; }
+.theme-toggle {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 12px; font-size: 13px;
+  cursor: pointer; color: var(--text-secondary);
+  white-space: nowrap; margin-left: 16px; flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s;
+}
+.theme-toggle:hover { border-color: var(--tab-active-border); color: var(--text-primary); }
+
+/* Tabs */
+.tab-nav {
+  display: flex; gap: 4px; margin-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+.tab-btn {
+  background: none; border: none; color: var(--tab-inactive-text);
+  font-size: 13px; font-weight: 600; padding: 10px 18px;
+  cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: color 0.15s, border-color 0.15s;
+}
+.tab-btn:hover { color: var(--tab-hover-text); }
+.tab-btn.active { color: var(--tab-active-text); border-bottom-color: var(--tab-active-border); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* Section headers */
+.section-title {
+  font-size: 13px; font-weight: 600; color: var(--section-title-color);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 14px; margin-top: 36px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-title:first-child { margin-top: 0; }
+
+/* KPI cards */
+.kpi-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 12px; margin-bottom: 16px;
+}
+.kpi {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 18px;
+  box-shadow: var(--kpi-shadow);
+}
+.kpi-label { color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+.kpi-val { font-size: 24px; font-weight: 700; color: var(--text-primary); }
+.kpi-sub { font-size: 12px; margin-top: 4px; }
+
+/* Chart container */
+.chart-wrap {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px 20px; margin-bottom: 8px;
+}
+.chart-label {
+  font-size: 11px; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.07em; margin-bottom: 12px;
+}
+.chart-axis-x {
+  display: flex; justify-content: space-between;
+  font-size: 10px; color: var(--chart-axis); margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tables */
+table {
+  width: 100%; border-collapse: collapse; background: var(--bg-card);
+  border-radius: 10px; overflow: hidden; border: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+thead tr { background: var(--bg-thead); }
+th {
+  padding: 10px 14px; text-align: right; font-size: 11px;
+  font-weight: 600; color: var(--text-th); text-transform: uppercase;
+  letter-spacing: 0.06em; border-bottom: 1px solid var(--border);
+}
+th:first-child { text-align: left; }
+td {
+  padding: 10px 14px; text-align: right;
+  border-bottom: 1px solid var(--border-td); color: var(--text-td);
+  font-variant-numeric: tabular-nums;
+}
+td:first-child { text-align: left; color: var(--text-td-first); font-weight: 500; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg-table-row-hover); }
+tfoot td {
+  background: var(--bg-tfoot); border-top: 1px solid var(--border);
+  font-weight: 700; color: var(--text-primary); border-bottom: none;
+}
+tfoot tr:hover td { background: var(--bg-tfoot); }
+
+/* Footer caveat */
+.footer {
+  margin-top: 32px; color: var(--text-footer); font-size: 11px;
+  line-height: 1.8; border-top: 1px solid var(--border); padding-top: 16px;
+}
+
+/* Color utilities */
+.red    { color: var(--accent-red); }
+.green  { color: var(--accent-green); }
+.yellow { color: var(--accent-yellow); }
+.muted  { color: var(--text-muted); }
+.neg { color: var(--accent-red); }
+.pos { color: var(--accent-green); }
+
+/* Loading */
+.loading { color: var(--text-muted); font-size: 13px; padding: 40px 0; }
+
+@media (max-width: 700px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .header-row { flex-wrap: wrap; gap: 8px; }
+}
+</style>
+<script>
+(function(){var t=localStorage.getItem('btc-dashboard-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();
+</script>
+</head>
+<body>
+
+<div class="header-row">
+  <div>
+    <h1>BTC TVL Impact — Kelp DAO LayerZero Exploit <span class="badge">Apr 18, 2026</span></h1>
+    <p class="subtitle">rsETH depeg event on LayerZero · BTC-collateral liquidation cascade across Aave v3 and Morpho Blue · Data Apr 17–27, 2026</p>
+  </div>
+  <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀</button>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="aave">Aave v3 — Multichain</button>
+  <button class="tab-btn" data-tab="morpho">Morpho Blue — Multichain</button>
+  <button class="tab-btn" data-tab="spark">Spark Protocol</button>
+</div>
+
+<div id="tab-aave" class="tab-panel active">
+  <div id="aave-content"><p class="loading">Loading Aave data…</p></div>
+</div>
+
+<div id="tab-morpho" class="tab-panel">
+  <div id="morpho-content"><p class="loading">Loading Morpho data…</p></div>
+</div>
+
+<div id="tab-spark" class="tab-panel">
+  <div id="spark-content"><p class="loading">Loading Spark data…</p></div>
+</div>
+
+<script>
+// ---- Tab switching ----
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
+function activateTab(name) {
+  tabBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  tabPanels.forEach(p => p.classList.toggle('active', p.id === 'tab-' + name));
+  if (history.replaceState) history.replaceState(null, '', '#' + name);
+}
+tabBtns.forEach(b => b.addEventListener('click', () => activateTab(b.dataset.tab)));
+const initTab = location.hash.replace('#','') || 'aave';
+activateTab(['aave','morpho','spark'].includes(initTab) ? initTab : 'aave');
+
+// ---- Formatters ----
+function fmtB(usd) { return '$' + (usd / 1e9).toFixed(2) + 'B'; }
+function fmtM(usd) { return '$' + (usd / 1e6).toFixed(0) + 'M'; }
+function fmtBTC(n) { return n.toLocaleString('en-US', {maximumFractionDigits: 0}) + ' BTC'; }
+function fmtPct(p) {
+  const cls = p >= 0 ? 'pos' : 'neg';
+  return `<span class="${cls}">${p >= 0 ? '+' : ''}${p.toFixed(1)}%</span>`;
+}
+function shortDate(iso) {
+  const d = new Date(iso + 'T00:00:00Z');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
+
+// ---- Unified SVG Line Chart ----
+// points: [{date:'YYYY-MM-DD', value: number}]
+// annotations: [{date:'YYYY-MM-DD', label:'string', color:'#hex'}]
+// opts: {color, yFmt, title}
+function buildLineChart(points, annotations, opts) {
+  const W = 820, H = 120, PL = 64, PR = 16, PT = 14, PB = 28;
+  const IW = W - PL - PR, IH = H - PT - PB;
+  const LINE_COLOR = opts.color || '#34d399';
+  const yFmt = opts.yFmt || (v => fmtB(v));
+
+  const vals = points.map(p => p.value);
+  const minV = Math.min(...vals), maxV = Math.max(...vals);
+  const range = maxV - minV || 1;
+  const n = points.length;
+
+  function xPos(i) { return PL + (i / (n - 1)) * IW; }
+  function yPos(v) { return PT + (1 - (v - minV) / range) * IH; }
+
+  // Y gridlines (4 levels)
+  const gridCount = 4;
+  let gridLines = '';
+  let yLabels = '';
+  for (let i = 0; i <= gridCount; i++) {
+    const v = minV + (range * i / gridCount);
+    const y = yPos(v);
+    gridLines += `<line x1="${PL}" y1="${y.toFixed(1)}" x2="${W - PR}" y2="${y.toFixed(1)}" style="stroke:var(--chart-grid)" stroke-width="1"/>`;
+    yLabels += `<text x="${PL - 4}" y="${(y + 4).toFixed(1)}" style="fill:var(--chart-axis)" font-size="9" text-anchor="end" font-family="-apple-system,sans-serif">${yFmt(v)}</text>`;
+  }
+
+  // Polyline
+  const polyPts = points.map((p, i) => `${xPos(i).toFixed(1)},${yPos(p.value).toFixed(1)}`).join(' ');
+
+  // Fill gradient
+  const fillPts = `M ${xPos(0).toFixed(1)},${yPos(points[0].value).toFixed(1)} ` +
+    points.slice(1).map((p, i) => `L ${xPos(i+1).toFixed(1)},${yPos(p.value).toFixed(1)}`).join(' ') +
+    ` L ${xPos(n-1).toFixed(1)},${(PT+IH).toFixed(1)} L ${xPos(0).toFixed(1)},${(PT+IH).toFixed(1)} Z`;
+
+  // Annotation markers
+  let annotSvg = '';
+  (annotations || []).forEach(a => {
+    const idx = points.findIndex(p => p.date === a.date);
+    if (idx < 0) return;
+    const x = xPos(idx), y = yPos(points[idx].value);
+    const ac = a.color || '#64748b';
+    // vertical dashed line
+    annotSvg += `<line x1="${x.toFixed(1)}" y1="${PT}" x2="${x.toFixed(1)}" y2="${(PT+IH).toFixed(1)}" stroke="${ac}" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>`;
+    // dot
+    annotSvg += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="${ac}" style="stroke:var(--bg-card)" stroke-width="1.5"/>`;
+    // label - position to avoid overlap
+    const labelX = idx < n - 2 ? x + 4 : x - 4;
+    const anchor = idx < n - 2 ? 'start' : 'end';
+    annotSvg += `<text x="${labelX.toFixed(1)}" y="${(y - 7).toFixed(1)}" fill="${ac}" font-size="9" font-weight="600" text-anchor="${anchor}" font-family="-apple-system,sans-serif">${a.label}</text>`;
+  });
+
+  // End dot (current)
+  const lastX = xPos(n-1), lastY = yPos(points[n-1].value);
+  annotSvg += `<circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="3.5" fill="${LINE_COLOR}" style="stroke:var(--bg-card)" stroke-width="1.5"/>`;
+
+  // X axis date labels (show first, middle, last + annotated)
+  const annotDates = new Set((annotations||[]).map(a=>a.date));
+  const xLabelIdxs = new Set([0, Math.floor(n/2), n-1]);
+  points.forEach((p,i) => { if (annotDates.has(p.date)) xLabelIdxs.add(i); });
+  let xAxisLabels = '';
+  xLabelIdxs.forEach(i => {
+    const x = xPos(i);
+    const anchor = i === 0 ? 'start' : i === n-1 ? 'end' : 'middle';
+    xAxisLabels += `<text x="${x.toFixed(1)}" y="${(PT+IH+16).toFixed(1)}" style="fill:var(--chart-axis)" font-size="9" text-anchor="${anchor}" font-family="-apple-system,sans-serif">${shortDate(points[i].date)}</text>`;
+  });
+
+  const uid = 'cg' + Math.random().toString(36).slice(2,7);
+
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+  <defs>
+    <linearGradient id="${uid}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${LINE_COLOR}" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="${LINE_COLOR}" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+  ${gridLines}
+  ${yLabels}
+  <path d="${fillPts}" fill="url(#${uid})"/>
+  <polyline points="${polyPts}" fill="none" stroke="${LINE_COLOR}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  ${annotSvg}
+  ${xAxisLabels}
+</svg>`;
+}
+
+// ---- AAVE RENDER ----
+function renderAave(data) {
+  const km = data.keyMetrics;
+  const protTvl = data.protocolTvlTimeline || [];
+  const btcTl = data.btcDailyTimeline || {};
+  const pms = data.perMarketSnapshot;
+  const cb  = data.chainBreakdown || {};
+
+  // Compute daily aggregated BTC net TVL (deposits_usd - borrows_usd across all BTC assets)
+  const DATES = ['2026-04-17','2026-04-18','2026-04-19','2026-04-20','2026-04-21','2026-04-22','2026-04-23','2026-04-24','2026-04-25','2026-04-26','2026-04-27'];
+  const btcNetUsd = DATES.map(d => {
+    let net = 0, dep = 0;
+    Object.values(btcTl).forEach(assetDays => {
+      const v = assetDays[d];
+      if (v) { net += (v.net_usd || 0); dep += (v.deposits_usd || 0); }
+    });
+    return { date: d, netUsd: net, depUsd: dep };
+  });
+
+  // Compute daily BTC deposits (native BTC) summed across all assets
+  const btcDepBtc = DATES.map(d => {
+    let dep = 0;
+    Object.values(btcTl).forEach(assetDays => {
+      const v = assetDays[d];
+      if (v) dep += (v.deposits_btc || 0);
+    });
+    return { date: d, value: dep };
+  });
+
+  // Section 1 chart: protocol-wide TVL (DefiLlama multichain)
+  const s1Points = protTvl.map(e => ({ date: e.date, value: e.totalUsd }));
+
+  // Section 1 KPIs derived from protocolTvlTimeline (multichain, all assets)
+  const protPre    = protTvl.reduce((a,b) => b.totalUsd > a.totalUsd ? b : a, protTvl[0]);
+  const protTrough = protTvl.reduce((a,b) => b.totalUsd < a.totalUsd ? b : a, protTvl[0]);
+  const protCur    = protTvl[protTvl.length - 1];
+  const protTroughDropPct = ((protTrough.totalUsd - protPre.totalUsd) / protPre.totalUsd) * 100;
+  const protCurDropPct    = ((protCur.totalUsd - protPre.totalUsd) / protPre.totalUsd) * 100;
+
+  // Section 2 KPI: BTC recovery from trough (Aave)
+  const aaveDropAtTrough  = km.btcMarkets.preHackBtc - km.btcMarkets.troughBtc;
+  const aaveRecoveryBtc   = km.btcMarkets.currentBtc - km.btcMarkets.troughBtc;
+  const aaveRecoveryPct   = aaveDropAtTrough > 0 ? (aaveRecoveryBtc / aaveDropAtTrough) * 100 : 0;
+
+  // Section 2 chart: BTC net TVL (deposits - borrows USD)
+  const s2Points = btcNetUsd.map(e => ({ date: e.date, value: e.netUsd }));
+
+  // Section 3 chart 1: total BTC deposits (native)
+  const s3BtcPoints = btcDepBtc;
+
+  // Section 3 chart 2: total BTC deposits (USD)
+  const s3UsdPoints = btcNetUsd.map(e => ({ date: e.date, value: e.depUsd }));
+
+  const ANNOTS_PROTO = [
+    { date: '2026-04-18', label: 'Hack', color: '#f87171' },
+    { date: '2026-04-25', label: 'Trough', color: '#fbbf24' },
+    { date: '2026-04-27', label: 'Current', color: '#34d399' },
+  ];
+  const ANNOTS_BTC = [
+    { date: '2026-04-17', label: 'Pre-Hack', color: '#94a3b8' },
+    { date: '2026-04-24', label: 'Trough', color: '#fbbf24' },
+    { date: '2026-04-27', label: 'Current', color: '#34d399' },
+  ];
+
+  // BTC markets table — filter to isBtc from perMarketSnapshot (multichain), sort by preDepositBtc desc
+  const btcMkts = (pms?.markets || [])
+    .filter(m => m.isBtc)
+    .sort((a,b) => (b.preDepositBtc||0) - (a.preDepositBtc||0));
+
+  const mktRows = btcMkts.map(m => {
+    const drop = m.dropPct ?? 0;
+    const troughBtc = m.troughDepositBtc ?? '—';
+    const troughBtcFmt = typeof troughBtc === 'number' ? Math.round(troughBtc).toLocaleString() + ' BTC' : '—';
+    return `<tr>
+      <td>${m.asset}</td>
+      <td>${m.chain}</td>
+      <td>${Math.round(m.preDepositBtc||0).toLocaleString()} BTC</td>
+      <td>${troughBtcFmt}</td>
+      <td>${m.currentDepositBtc != null ? Math.round(m.currentDepositBtc).toLocaleString() + ' BTC' : '—'}</td>
+      <td class="${drop <= -40 ? 'neg' : drop <= -20 ? 'yellow' : 'muted'}">${drop.toFixed(1)}%</td>
+    </tr>`;
+  }).join('');
+
+  // Trough for BTC: Apr 24
+  const troughBtcDate = km.btcMarkets.troughDate || '2026-04-24';
+
+  const html = `
+<!-- Section 1: Protocol Overview -->
+<div class="section-title">Protocol Overview <span class="badge-blue">11 Chains · All Assets · DefiLlama</span></div>
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">Pre-Hack TVL</div>
+    <div class="kpi-val">${fmtB(protPre.totalUsd)}</div>
+    <div class="kpi-sub muted">${shortDate(protPre.date)} · multichain · all assets</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Trough TVL</div>
+    <div class="kpi-val red">${fmtB(protTrough.totalUsd)}</div>
+    <div class="kpi-sub red">${protTroughDropPct.toFixed(1)}% drop · ${shortDate(protTrough.date)}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Current TVL</div>
+    <div class="kpi-val yellow">${fmtB(protCur.totalUsd)}</div>
+    <div class="kpi-sub muted">${shortDate(protCur.date)} · ${protCurDropPct.toFixed(1)}% from pre-hack</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Total Loss</div>
+    <div class="kpi-val red">${fmtB(protPre.totalUsd - protCur.totalUsd)}</div>
+    <div class="kpi-sub red">${protCurDropPct.toFixed(1)}% from pre-hack · multichain TVL</div>
+  </div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-label">Aave v3 — Protocol TVL (Multichain, All Assets) · Apr 17 → Apr 27 · DefiLlama</div>
+  ${buildLineChart(s1Points, ANNOTS_PROTO, { color: '#3b82f6', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
+</div>
+
+<!-- Section 2: Daily Net TVL Timeline -->
+<div class="section-title">Daily Net TVL Timeline <span class="badge-blue">BTC Collateral · All Chains</span></div>
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">Pre-Hack BTC</div>
+    <div class="kpi-val">${Math.round(km.btcMarkets.preHackBtc).toLocaleString()} BTC</div>
+    <div class="kpi-sub muted">${fmtB(km.btcMarkets.preHackUsd)} · ${shortDate(km.btcMarkets.preHackDate)}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Trough BTC</div>
+    <div class="kpi-val red">${Math.round(km.btcMarkets.troughBtc).toLocaleString()} BTC</div>
+    <div class="kpi-sub red">${km.btcMarkets.dropPct.toFixed(1)}% drop · ${shortDate(km.btcMarkets.troughDate)}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Current BTC</div>
+    <div class="kpi-val yellow">${Math.round(km.btcMarkets.currentBtc).toLocaleString()} BTC</div>
+    <div class="kpi-sub muted">${fmtB(km.btcMarkets.currentUsd)} · ${shortDate(km.btcMarkets.currentDate)}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Total Loss</div>
+    <div class="kpi-val red">${Math.round(-km.btcMarkets.dropBtc).toLocaleString()} BTC</div>
+    <div class="kpi-sub red">${fmtB(-km.btcMarkets.dropUsd)} · ${km.btcMarkets.dropPct.toFixed(1)}% from pre-hack</div>
+  </div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-label">Aave v3 — BTC Collateral Net TVL (Ethereum · WBTC+cbBTC+tBTC+LBTC, Deposits−Borrows) · Apr 17 → Apr 27 · Subgraph</div>
+  ${buildLineChart(s2Points, ANNOTS_BTC, { color: '#34d399', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
+</div>
+
+<!-- Section 3: BTC Market Breakdown -->
+<div class="section-title">BTC Market Breakdown <span class="badge-blue">All Chains · Subgraph Data</span></div>
+<table>
+  <thead>
+    <tr><th>Asset</th><th>Chain</th><th>Pre-Hack BTC</th><th>Trough BTC</th><th>Current BTC</th><th>Δ%</th></tr>
+  </thead>
+  <tbody>${mktRows}</tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2">All BTC Markets Total</td>
+      <td>${Math.round(km.btcMarkets.preHackBtc).toLocaleString()} BTC</td>
+      <td>${Math.round(km.btcMarkets.troughBtc).toLocaleString()} BTC</td>
+      <td>${Math.round(km.btcMarkets.currentBtc).toLocaleString()} BTC</td>
+      <td class="neg">${km.btcMarkets.dropPct.toFixed(1)}%</td>
+    </tr>
+  </tfoot>
+</table>
+<div class="footer">
+  Data sources: Aave official subgraphs (11 chains) · DefiLlama protocol/aave-v3 (multichain TVL) · Generated Apr 27, 2026 UTC · Built by Casper CTO
+</div>`;
+
+  document.getElementById('aave-content').innerHTML = html;
+}
+
+// ---- MORPHO RENDER ----
+function renderMorpho(data) {
+  const km = data.keyMetrics;
+  const protTvl = data.protocolTvlTimeline || [];
+  const tl = data.dailyTimeline;
+  const topMkts = data.topMarkets || [];
+
+  const DATES = Object.keys(tl).sort();
+
+  // Section 1: Protocol TVL (DefiLlama)
+  const s1Points = protTvl.map(e => ({ date: e.date, value: e.totalUsd }));
+
+  // Section 1 KPIs derived from protocolTvlTimeline (multichain, all assets)
+  const protPre    = protTvl.reduce((a,b) => b.totalUsd > a.totalUsd ? b : a, protTvl[0]);
+  const protTrough = protTvl.reduce((a,b) => b.totalUsd < a.totalUsd ? b : a, protTvl[0]);
+  const protCur    = protTvl[protTvl.length - 1];
+  const protTroughDropPct = ((protTrough.totalUsd - protPre.totalUsd) / protPre.totalUsd) * 100;
+  const protCurDropPct    = ((protCur.totalUsd - protPre.totalUsd) / protPre.totalUsd) * 100;
+
+  // Section 2: Daily BTC collateral net TVL (USD) — morpho collateral is the "net"
+  const s2Points = DATES.map(d => ({ date: d, value: tl[d].usd }));
+
+  // Section 3 chart 1: BTC native
+  const s3BtcPoints = DATES.map(d => ({ date: d, value: tl[d].btc }));
+
+  // Section 3 chart 2: USD equivalent
+  const s3UsdPoints = DATES.map(d => ({ date: d, value: tl[d].usd }));
+
+  const ANNOTS_PROTO = [
+    { date: '2026-04-18', label: 'Hack', color: '#f87171' },
+    { date: '2026-04-20', label: 'Trough', color: '#fbbf24' },
+    { date: '2026-04-26', label: 'Current', color: '#34d399' },
+  ];
+  const ANNOTS_BTC = [
+    { date: '2026-04-18', label: 'Pre-Hack', color: '#94a3b8' },
+    { date: '2026-04-20', label: 'Trough', color: '#fbbf24' },
+    { date: '2026-04-26', label: 'Current', color: '#34d399' },
+  ];
+
+  // Per-market table from topMarkets — sort by preHackBtc desc
+  const sortedMkts = [...topMkts].sort((a,b) => (b.preHackBtc||0) - (a.preHackBtc||0));
+  const mktRows = sortedMkts.map(m => {
+    const drop = m.troughDropPct;
+    const isEpicenter = m.highlight === 'exploit-epicenter';
+    const rowStyle = isEpicenter ? ' style="background:var(--bg-epic)"' : '';
+    const badge = isEpicenter ? ' <span class="badge" style="font-size:10px;padding:1px 5px;">Epicenter</span>' : '';
+    return `<tr${rowStyle}>
+      <td>${m.collateral}/${m.loan}${badge}</td>
+      <td>${m.chainName}</td>
+      <td>${m.preHackBtc.toLocaleString()} BTC</td>
+      <td>${m.troughBtc.toLocaleString()} BTC</td>
+      <td>${m.currentBtc.toLocaleString()} BTC</td>
+      <td class="${drop <= -50 ? 'neg' : drop <= -20 ? 'yellow' : 'muted'}">${drop.toFixed(1)}%</td>
+    </tr>`;
+  }).join('');
+
+  const html = `
+<!-- Section 1: Protocol Overview -->
+<div class="section-title">Protocol Overview <span class="badge-blue">7 Chains · All Assets · DefiLlama</span></div>
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">Pre-Hack TVL</div>
+    <div class="kpi-val">${fmtB(protPre.totalUsd)}</div>
+    <div class="kpi-sub muted">${shortDate(protPre.date)} · multichain · all assets</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Trough TVL</div>
+    <div class="kpi-val red">${fmtB(protTrough.totalUsd)}</div>
+    <div class="kpi-sub red">${protTroughDropPct.toFixed(1)}% drop · ${shortDate(protTrough.date)}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Current TVL</div>
+    <div class="kpi-val yellow">${fmtB(protCur.totalUsd)}</div>
+    <div class="kpi-sub muted">${shortDate(protCur.date)} · ${protCurDropPct.toFixed(1)}% from pre-hack</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Total Loss</div>
+    <div class="kpi-val red">${fmtB(protPre.totalUsd - protCur.totalUsd)}</div>
+    <div class="kpi-sub red">${protCurDropPct.toFixed(1)}% from pre-hack · multichain TVL</div>
+  </div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-label">Morpho Blue — Protocol TVL (Multichain, All Assets) · Apr 17 → Apr 26 · DefiLlama</div>
+  ${buildLineChart(s1Points, ANNOTS_PROTO, { color: '#3b82f6', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
+</div>
+
+<!-- Section 2: Daily Net TVL Timeline -->
+<div class="section-title">Daily Net TVL Timeline <span class="badge-blue">BTC Collateral · All Chains</span></div>
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">Pre-Hack BTC</div>
+    <div class="kpi-val">${Math.round(km.preHack.btc).toLocaleString()} BTC</div>
+    <div class="kpi-sub muted">${fmtB(km.preHack.usd)} · ${shortDate(km.preHack.date)}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Trough BTC</div>
+    <div class="kpi-val red">${Math.round(km.trough.btc).toLocaleString()} BTC</div>
+    <div class="kpi-sub red">${km.trough.dropPct.toFixed(1)}% drop · ${shortDate(km.trough.date)}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Current BTC</div>
+    <div class="kpi-val yellow">${Math.round(km.current.btc).toLocaleString()} BTC</div>
+    <div class="kpi-sub muted">${fmtB(km.current.usd)} · ${shortDate(km.current.date)}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Total Loss</div>
+    <div class="kpi-val red">${Math.round(-km.current.dropFromPreHackBtc).toLocaleString()} BTC</div>
+    <div class="kpi-sub red">${fmtB(km.preHack.usd - km.current.usd)} · ${km.current.dropFromPreHackPct.toFixed(1)}% from pre-hack</div>
+  </div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-label">Morpho Blue — BTC Collateral Net TVL (USD) · Apr 17 → Apr 26 · Morpho GraphQL</div>
+  ${buildLineChart(s2Points, ANNOTS_BTC, { color: '#34d399', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
+</div>
+
+<!-- Section 3: BTC Market Breakdown -->
+<div class="section-title">BTC Market Breakdown <span class="badge-blue">27 Markets · Morpho GraphQL</span></div>
+<table>
+  <thead>
+    <tr><th>Market</th><th>Chain</th><th>Pre-Hack BTC</th><th>Trough BTC</th><th>Current BTC</th><th>Δ%</th></tr>
+  </thead>
+  <tbody>${mktRows}</tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2">All BTC Markets Total</td>
+      <td>${Math.round(km.preHack.btc).toLocaleString()} BTC</td>
+      <td>${Math.round(km.trough.btc).toLocaleString()} BTC</td>
+      <td>${Math.round(km.current.btc).toLocaleString()} BTC</td>
+      <td class="${km.trough.dropPct <= -20 ? 'neg' : 'muted'}">${km.trough.dropPct.toFixed(1)}%</td>
+    </tr>
+  </tfoot>
+</table>
+<div class="footer">
+  Data sources: Morpho Blue GraphQL API (blue-api.morpho.org) · DefiLlama protocol/morpho-blue · Generated Apr 27, 2026 UTC · Built by Casper CTO
+</div>`;
+
+  document.getElementById('morpho-content').innerHTML = html;
+}
+
+// ---- SPARK RENDER ----
+function renderSpark(data) {
+  const km = data.keyMetrics;
+  const protTvl = data.protocolTvlTimeline || [];
+  const btcTl = data.btcDailyTimeline || {};
+  const pms = data.perMarketSnapshot;
+
+  const DATES = ['2026-04-17','2026-04-18','2026-04-19','2026-04-20','2026-04-21','2026-04-22','2026-04-23','2026-04-24','2026-04-25','2026-04-26','2026-04-27'];
+
+  // Daily aggregated BTC net TVL
+  const btcNetUsd = DATES.map(d => {
+    let net = 0, dep = 0;
+    Object.values(btcTl).forEach(assetDays => {
+      const v = assetDays[d];
+      if (v) { net += (v.net_usd || 0); dep += (v.deposits_usd || 0); }
+    });
+    return { date: d, netUsd: net, depUsd: dep };
+  });
+
+  // Daily BTC deposits native
+  const btcDepBtc = DATES.map(d => {
+    let dep = 0;
+    Object.values(btcTl).forEach(assetDays => {
+      const v = assetDays[d];
+      if (v) dep += (v.deposits_btc || 0);
+    });
+    return { date: d, value: dep };
+  });
+
+  // Section 1: protocol-wide TVL (DefiLlama multichain)
+  const s1Points = protTvl.map(e => ({ date: e.date, value: e.totalUsd }));
+  const protPre    = protTvl.reduce((a,b) => a.date <= '2026-04-17' && b.date > '2026-04-17' ? a : (b.date <= '2026-04-17' ? b : a), protTvl[0]);
+  const protTrough = protTvl.reduce((a,b) => b.totalUsd < a.totalUsd ? b : a, protTvl[0]);
+  const protCur    = protTvl[protTvl.length - 1];
+  const protTroughDropPct = ((protTrough.totalUsd - protPre.totalUsd) / protPre.totalUsd) * 100;
+  const protCurChangePct  = ((protCur.totalUsd - protPre.totalUsd) / protPre.totalUsd) * 100;
+
+  // Section 2: BTC change (gain or loss)
+  const s2Points = btcNetUsd.map(e => ({ date: e.date, value: e.netUsd }));
+  const s3BtcPoints = btcDepBtc;
+
+  const isGain = km.btcMarkets.dropBtc >= 0;
+
+  const ANNOTS_PROTO = [
+    { date: '2026-04-18', label: 'Hack', color: '#f87171' },
+    { date: protTrough.date, label: 'Trough', color: '#fbbf24' },
+    { date: protCur.date,   label: 'Current', color: '#34d399' },
+  ];
+  const ANNOTS_BTC = [
+    { date: '2026-04-17', label: 'Pre-Hack', color: '#94a3b8' },
+    { date: '2026-04-19', label: 'Inflow', color: '#3b82f6' },
+    { date: km.btcMarkets.currentDate, label: 'Current', color: '#34d399' },
+  ];
+
+  // BTC markets table
+  const btcMkts = (pms?.markets || [])
+    .filter(m => m.isBtc)
+    .sort((a,b) => (b.currentDepositBtc||0) - (a.currentDepositBtc||0));
+
+  const mktRows = btcMkts.map(m => {
+    const change = m.dropPct ?? 0;
+    const cls = change < -20 ? 'neg' : change >= 0 ? 'pos' : 'yellow';
+    const preStr = m.preDepositBtc > 0 ? Math.round(m.preDepositBtc).toLocaleString() + ' BTC' : '—';
+    const trBtc = m.troughDepositBtc != null ? m.troughDepositBtc : m.preDepositBtc;
+    const trStr = trBtc > 0 ? Math.round(trBtc).toLocaleString() + ' BTC' : '—';
+    return `<tr>
+      <td>${m.asset}</td>
+      <td>${m.chain}</td>
+      <td>${preStr}</td>
+      <td>${trStr}</td>
+      <td>${m.currentDepositBtc != null ? Math.round(m.currentDepositBtc).toLocaleString() + ' BTC' : '—'}</td>
+      <td class="${cls}">${change >= 0 ? '+' : ''}${change.toFixed(1)}%</td>
+    </tr>`;
+  }).join('');
+
+  // Section 1 Total change (may be gain)
+  const s1TotalLossUsd = protCur.totalUsd - protPre.totalUsd;
+  const s1IsGain = s1TotalLossUsd >= 0;
+
+  const html = `
+<!-- Section 1: Protocol Overview -->
+<div class="section-title">Protocol Overview <span class="badge-blue">Multichain · All Assets · DefiLlama</span></div>
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">Pre-Hack TVL</div>
+    <div class="kpi-val">${fmtB(protPre.totalUsd)}</div>
+    <div class="kpi-sub muted">${shortDate(protPre.date)} · multichain · all assets</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Trough TVL</div>
+    <div class="kpi-val red">${fmtB(protTrough.totalUsd)}</div>
+    <div class="kpi-sub red">${protTroughDropPct.toFixed(1)}% drop · ${shortDate(protTrough.date)}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Current TVL</div>
+    <div class="kpi-val ${s1IsGain ? 'green' : 'yellow'}">${fmtB(protCur.totalUsd)}</div>
+    <div class="kpi-sub ${s1IsGain ? 'green' : 'muted'}">${shortDate(protCur.date)} · ${protCurChangePct >= 0 ? '+' : ''}${protCurChangePct.toFixed(1)}% from pre-hack</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">${s1IsGain ? 'Total Gain' : 'Total Loss'}</div>
+    <div class="kpi-val ${s1IsGain ? 'green' : 'red'}">${s1IsGain ? '+' : ''}${fmtB(s1TotalLossUsd)}</div>
+    <div class="kpi-sub ${s1IsGain ? 'green' : 'red'}">${protCurChangePct >= 0 ? '+' : ''}${protCurChangePct.toFixed(1)}% from pre-hack · multichain TVL</div>
+  </div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-label">Spark Protocol — Protocol TVL (Multichain, All Assets) · Apr 17 → Apr 27 · DefiLlama</div>
+  ${buildLineChart(s1Points, ANNOTS_PROTO, { color: '#a78bfa', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
+</div>
+
+<!-- Section 2: Daily Net TVL Timeline -->
+<div class="section-title">Daily Net TVL Timeline <span class="badge-blue">BTC Collateral · Ethereum · Post-Hack Inflow</span></div>
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">Pre-Hack BTC</div>
+    <div class="kpi-val">${Math.round(km.btcMarkets.preHackBtc).toLocaleString()} BTC</div>
+    <div class="kpi-sub muted">${fmtB(km.btcMarkets.preHackUsd)} · ${shortDate(km.btcMarkets.preHackDate)}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Trough BTC</div>
+    <div class="kpi-val muted">${Math.round(km.btcMarkets.troughBtc).toLocaleString()} BTC</div>
+    <div class="kpi-sub muted">No dip · ${shortDate(km.btcMarkets.troughDate)}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Current BTC</div>
+    <div class="kpi-val green">${Math.round(km.btcMarkets.currentBtc).toLocaleString()} BTC</div>
+    <div class="kpi-sub green">${fmtB(km.btcMarkets.currentUsd)} · ${shortDate(km.btcMarkets.currentDate)}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">${isGain ? 'Total Gain' : 'Total Loss'}</div>
+    <div class="kpi-val ${isGain ? 'green' : 'red'}">${isGain ? '+' : ''}${Math.round(Math.abs(km.btcMarkets.dropBtc)).toLocaleString()} BTC</div>
+    <div class="kpi-sub ${isGain ? 'green' : 'red'}">${isGain ? '+' : ''}${fmtB(Math.abs(km.btcMarkets.dropUsd))} · ${isGain ? '+' : ''}${km.btcMarkets.dropPct.toFixed(1)}% from pre-hack</div>
+  </div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-label">Spark Protocol — BTC Collateral Net TVL (Ethereum · WBTC+cbBTC+LBTC+tBTC, Deposits−Borrows) · Apr 17 → Apr 27 · Subgraph</div>
+  ${buildLineChart(s2Points, ANNOTS_BTC, { color: '#34d399', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
+</div>
+
+<!-- Section 3: BTC Market Breakdown -->
+<div class="section-title">BTC Market Breakdown <span class="badge-blue">Ethereum · Subgraph Data · Messari Schema</span></div>
+<table>
+  <thead>
+    <tr><th>Asset</th><th>Chain</th><th>Pre-Hack BTC</th><th>Trough BTC</th><th>Current BTC</th><th>Δ%</th></tr>
+  </thead>
+  <tbody>${mktRows}</tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2">All BTC Markets Total</td>
+      <td>${Math.round(km.btcMarkets.preHackBtc).toLocaleString()} BTC</td>
+      <td>${Math.round(km.btcMarkets.troughBtc).toLocaleString()} BTC</td>
+      <td>${Math.round(km.btcMarkets.currentBtc).toLocaleString()} BTC</td>
+      <td class="${isGain ? 'pos' : 'neg'}">${isGain ? '+' : ''}${km.btcMarkets.dropPct.toFixed(1)}%</td>
+    </tr>
+  </tfoot>
+</table>
+<div class="footer">
+  Data sources: Spark Lend Ethereum subgraph (The Graph Network, Messari schema) · DefiLlama protocol/spark (multichain TVL) · On-chain archive RPC (publicnode.com, block 24903024) · Generated Apr 27, 2026 UTC · Built by Casper CTO<br>
+  Note: Spark BTC collateral INCREASED post-hack — users migrated from Aave. Spark is primarily a DAI/sUSDS lending market; BTC was &lt;1% of pre-hack TVL. LBTC+tBTC pre-hack values verified via on-chain archive RPC (block 24903024 = Apr 18 00:00 UTC).
+</div>`;
+
+  document.getElementById('spark-content').innerHTML = html;
+}
+
+// ---- DATA LOADING ----
+const cache = {};
+async function loadTab(name) {
+  if (cache[name]) return;
+  try {
+    const res = await fetch(`data/${name}.json`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    cache[name] = data;
+    if (name === 'aave') renderAave(data);
+    else if (name === 'morpho') renderMorpho(data);
+    else if (name === 'spark') renderSpark(data);
+  } catch (e) {
+    document.getElementById(`${name}-content`).innerHTML =
+      `<p class="loading">Error loading ${name}.json: ${e.message}. Serve via HTTP (not file://). Run: python3 -m http.server 8765</p>`;
+  }
+}
+
+loadTab('aave');
+loadTab('morpho');
+tabBtns.forEach(b => b.addEventListener('click', () => loadTab(b.dataset.tab)));
+
+// ---- Theme Toggle ----
+const toggleBtn = document.getElementById('theme-toggle');
+function applyTheme(t) {
+  if (t === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    toggleBtn.textContent = '🌙';
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    toggleBtn.textContent = '☀';
+  }
+  localStorage.setItem('btc-dashboard-theme', t);
+}
+applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+toggleBtn.addEventListener('click', () => {
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+</script>
+</body>
+</html>

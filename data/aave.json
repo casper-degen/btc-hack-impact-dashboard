@@ -1,0 +1,1339 @@
+{
+  "_meta": {
+    "protocol": "Aave v3",
+    "chains": "Multichain: Ethereum, Polygon, Arbitrum, Optimism, Avalanche, BNB, Base, Scroll, Gnosis, Linea, Metis",
+    "event": "Kelp DAO LayerZero Exploit",
+    "hackDate": "2026-04-18",
+    "fetchedAt": "2026-04-27T00:32:27.480Z",
+    "dataFreshness": "2026-04-27",
+    "sources": {
+      "dailyTimeline": "DefiLlama API (api.llama.fi/protocol/aave-v3 → chainTvls.Ethereum.tvl) — total Aave v3 Ethereum net TVL",
+      "perMarket": "Aave official subgraphs — per-market BTC data Apr 17–27, 2026 (all chains)",
+      "btcPrice": "Binance BTCUSDT daily klines (api.binance.com/api/v3/klines)",
+      "note": "Multichain BTC-collateral: WBTC, cbBTC, tBTC, LBTC, BTC.b, BTCB, and chain-specific tokens. All from Aave official subgraphs."
+    },
+    "subgraphIds": {
+      "Ethereum": "Cd2gEDVeqnjBn1hSeqFMitw8Q1iiyV9FYUZkLNRcL87g",
+      "Polygon": "Co2URyXjnxaw8WqxKyVHdirq9Ahhm5vcTs4dMedAq211",
+      "Arbitrum": "DLuE98kEb5pQNXAcKFQGQgfSQ57Xdou4jnVbAEqMfy3B",
+      "Optimism": "DSfLz8oQBUeU5atALgUFQKMTSYV9mZAVYp4noLSXAfvb",
+      "Base": "GQFbb95cE6d8mV989mL5figjaGaKCQB3xqYrr1bRyXqF",
+      "Avalanche": "2h9woxy8RTjHu1HJsCEnmzpPHFArU33avmUh4f71JpVn",
+      "BNB": "7Jk85XgkV1MQ7u56hD8rr65rfASbayJXopugWkUoBMnZ",
+      "Scroll": "74JwenoHZb2aAYVGCCSdPWzi9mm745dyHyQQVoZ7Sbub",
+      "Gnosis": "HtcDaL8L8iZ2KQNNS44EBVmLruzxuNAz1RkBYdui1QUT",
+      "Linea": "Gz2kjnmRV1fQj3R8cssoZa5y9VTanhrDo4Mh7nWW1wHa",
+      "Metis": "https://metisapi.0xgraph.xyz/subgraphs/name/aave/protocol-v3-metis"
+    }
+  },
+  "keyMetrics": {
+    "preHack": {
+      "date": "2026-04-17",
+      "label": "Pre-Hack (Apr 17)",
+      "tvlUsd": 20544751110,
+      "depositsUsd": 35336971909,
+      "borrowsUsd": 14792220799
+    },
+    "trough": {
+      "date": "2026-04-25",
+      "label": "Trough (2026-04-25)",
+      "tvlUsd": 11401114002,
+      "dropUsd": -9143637108,
+      "dropPct": -44.5
+    },
+    "current": {
+      "date": "2026-04-27",
+      "label": "Current (Apr 27)",
+      "tvlUsd": 11527318981,
+      "dropFromPreHackUsd": -9017432129,
+      "dropFromPreHackPct": -43.9,
+      "recoveryFromTroughUsd": 126204979,
+      "recoveryFromTroughPct": 1.1
+    },
+    "btcMarkets": {
+      "note": "All BTC-collateral markets across all Aave v3 chains. Source: Aave official subgraphs.",
+      "preHackBtc": 81863.1863,
+      "preHackUsd": 6309359497,
+      "preHackDate": "2026-04-17",
+      "day4Btc": 56204.3148,
+      "day4Usd": 4290421007,
+      "troughBtc": 53987.8033,
+      "troughUsd": 4180660544,
+      "troughDate": "2026-04-24",
+      "currentBtc": 53876.3412,
+      "currentUsd": 4226385614,
+      "currentDate": "2026-04-27",
+      "dropBtc": -27986.8452,
+      "dropUsd": -2082973883,
+      "dropPct": -33,
+      "source": "aave-official-subgraph-multichain"
+    }
+  },
+  "dailyTimeline": {
+    "2026-04-17": {
+      "tvlUsd": 20544751110,
+      "btcDepositsUsd": 5509013128,
+      "btcDepositsBtc": 71478.7877,
+      "btcBorrowsUsd": 111814446,
+      "source": "DefiLlama (total Aave v3 ETH) + aave-official-subgraph (BTC subset)",
+      "label": "Pre-Hack"
+    },
+    "2026-04-18": {
+      "tvlUsd": 21016469490,
+      "btcDepositsUsd": 4758723936,
+      "btcDepositsBtc": 62869.7752,
+      "btcBorrowsUsd": 170677476,
+      "source": "DefiLlama (total Aave v3 ETH) + aave-official-subgraph (BTC subset)",
+      "label": "Hack Day"
+    },
+    "2026-04-19": {
+      "tvlUsd": 17400201178,
+      "btcDepositsUsd": 3914124501,
+      "btcDepositsBtc": 53035.631,
+      "btcBorrowsUsd": 200031686,
+      "source": "DefiLlama (total Aave v3 ETH) + aave-official-subgraph (BTC subset)",
+      "label": "Day 2"
+    },
+    "2026-04-20": {
+      "tvlUsd": 13969492147,
+      "btcDepositsUsd": 3747377196,
+      "btcDepositsBtc": 49410.9872,
+      "btcBorrowsUsd": 198185758,
+      "source": "DefiLlama (total Aave v3 ETH) + aave-official-subgraph (BTC subset)",
+      "label": "Day 3"
+    },
+    "2026-04-21": {
+      "tvlUsd": 12936053763,
+      "btcDepositsUsd": 3610076249,
+      "btcDepositsBtc": 47291.8303,
+      "btcBorrowsUsd": 174152618,
+      "source": "DefiLlama (total Aave v3 ETH) + aave-official-subgraph (BTC subset)",
+      "label": "Day 4"
+    },
+    "2026-04-22": {
+      "tvlUsd": 12091490796,
+      "btcDepositsUsd": 3642096460,
+      "btcDepositsBtc": 46587.0929,
+      "btcBorrowsUsd": 157576245,
+      "source": "DefiLlama (total Aave v3 ETH) + aave-official-subgraph (BTC subset)",
+      "label": "Day 5"
+    },
+    "2026-04-23": {
+      "tvlUsd": 11901893222,
+      "btcDepositsUsd": 3565449477,
+      "btcDepositsBtc": 45560.4944,
+      "btcBorrowsUsd": 153689401,
+      "source": "DefiLlama (total Aave v3 ETH) + aave-official-subgraph (BTC subset)",
+      "label": "Day 6"
+    },
+    "2026-04-24": {
+      "tvlUsd": 11425634059,
+      "btcDepositsUsd": 3517170239,
+      "btcDepositsBtc": 45419.6874,
+      "btcBorrowsUsd": 144640596,
+      "source": "DefiLlama (total Aave v3 ETH) + aave-official-subgraph (BTC subset)",
+      "label": "Day 7 — Trough"
+    },
+    "2026-04-25": {
+      "tvlUsd": 11401114002,
+      "btcDepositsUsd": 3521192292,
+      "btcDepositsBtc": 45361.5754,
+      "btcBorrowsUsd": 146153391,
+      "source": "DefiLlama (total Aave v3 ETH) + aave-official-subgraph (BTC subset)",
+      "label": "Day 8"
+    },
+    "2026-04-26": {
+      "tvlUsd": 11527318981,
+      "btcDepositsUsd": 3565747134,
+      "btcDepositsBtc": 45332.5477,
+      "btcBorrowsUsd": 147965950,
+      "source": "DefiLlama (total Aave v3 ETH) + aave-official-subgraph (BTC subset)",
+      "label": "Day 9"
+    },
+    "2026-04-27": {
+      "tvlUsd": 11527318981,
+      "btcDepositsUsd": 3564620309,
+      "btcDepositsBtc": 45332.6878,
+      "btcBorrowsUsd": 147908726,
+      "source": "DefiLlama (Apr 26 carry-forward) + aave-official-subgraph (BTC subset)",
+      "label": "Today"
+    }
+  },
+  "chainBreakdown": {
+    "Ethereum": {
+      "status": "ok",
+      "subgraphId": "Cd2gEDVeqnjBn1hSeqFMitw8Q1iiyV9FYUZkLNRcL87g",
+      "reserves": [
+        {
+          "symbol": "WBTC",
+          "id": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c5990x2f39d218133afab8f2b819b1066c7e434ad94e9e",
+          "decimals": 8
+        },
+        {
+          "symbol": "cbBTC",
+          "id": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf0x2f39d218133afab8f2b819b1066c7e434ad94e9e",
+          "decimals": 8
+        },
+        {
+          "symbol": "tBTC",
+          "id": "0x18084fba666a33d37592fa2633fd49a74dd93a880x2f39d218133afab8f2b819b1066c7e434ad94e9e",
+          "decimals": 18
+        },
+        {
+          "symbol": "LBTC",
+          "id": "0x8236a87084f8b84306f72007f36f2618a56344940x2f39d218133afab8f2b819b1066c7e434ad94e9e",
+          "decimals": 8
+        }
+      ],
+      "preHackBtc": 71478.7847,
+      "preHackUsd": 5509012892,
+      "troughBtc": 45419.6844,
+      "troughUsd": 3517170002,
+      "troughDate": "2026-04-24",
+      "currentBtc": 45324.8202,
+      "currentUsd": 3555552662,
+      "dropUsd": -1953460230,
+      "dropBtc": -26153.9644,
+      "dropPct": -35.5,
+      "sharePctOfPre": 87.3
+    },
+    "Polygon": {
+      "status": "ok",
+      "subgraphId": "Co2URyXjnxaw8WqxKyVHdirq9Ahhm5vcTs4dMedAq211",
+      "reserves": [
+        {
+          "symbol": "WBTC",
+          "id": "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd60xa97684ead0e402dc232d5a977953df7ecbab3cdb",
+          "decimals": 8,
+          "underlyingAsset": "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6"
+        }
+      ],
+      "preHackBtc": 908.842,
+      "preHackUsd": 70046267,
+      "troughBtc": 883.5659,
+      "troughUsd": 65208743,
+      "troughDate": "2026-04-19",
+      "currentBtc": 862.1622,
+      "currentUsd": 67633209,
+      "dropUsd": -2413058,
+      "dropBtc": -46.6798,
+      "dropPct": -3.4,
+      "sharePctOfPre": 1.1
+    },
+    "Arbitrum": {
+      "status": "ok",
+      "subgraphId": "DLuE98kEb5pQNXAcKFQGQgfSQ57Xdou4jnVbAEqMfy3B",
+      "reserves": [
+        {
+          "symbol": "WBTC",
+          "id": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f0xa97684ead0e402dc232d5a977953df7ecbab3cdb",
+          "decimals": 8,
+          "underlyingAsset": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f"
+        }
+      ],
+      "preHackBtc": 3019.3967,
+      "preHackUsd": 232710940,
+      "troughBtc": 2621.601,
+      "troughUsd": 203009255,
+      "troughDate": "2026-04-24",
+      "currentBtc": 2615.3777,
+      "currentUsd": 205166026,
+      "dropUsd": -27544914,
+      "dropBtc": -404.0189,
+      "dropPct": -11.8,
+      "sharePctOfPre": 3.7
+    },
+    "Optimism": {
+      "status": "ok",
+      "subgraphId": "DSfLz8oQBUeU5atALgUFQKMTSYV9mZAVYp4noLSXAfvb",
+      "reserves": [
+        {
+          "symbol": "WBTC",
+          "id": "0x68f180fcce6836688e9084f035309e29bf0a20950xa97684ead0e402dc232d5a977953df7ecbab3cdb",
+          "decimals": 8,
+          "underlyingAsset": "0x68f180fcce6836688e9084f035309e29bf0a2095"
+        }
+      ],
+      "preHackBtc": 315.2339,
+      "preHackUsd": 24295707,
+      "troughBtc": 305.1704,
+      "troughUsd": 22522124,
+      "troughDate": "2026-04-19",
+      "currentBtc": 301.7738,
+      "currentUsd": 23672958,
+      "dropUsd": -622749,
+      "dropBtc": -13.4601,
+      "dropPct": -2.6,
+      "sharePctOfPre": 0.4
+    },
+    "Base": {
+      "status": "ok",
+      "subgraphId": "GQFbb95cE6d8mV989mL5figjaGaKCQB3xqYrr1bRyXqF",
+      "reserves": [
+        {
+          "symbol": "tBTC",
+          "id": "0x236aa50979d5f3de3bd1eeb40e81137f22ab794b0xe20fcbdbffc4dd138ce8b2e6fbb6cb49777ad64d",
+          "decimals": 18,
+          "underlyingAsset": "0x236aa50979d5f3de3bd1eeb40e81137f22ab794b"
+        },
+        {
+          "symbol": "cbBTC",
+          "id": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf0xe20fcbdbffc4dd138ce8b2e6fbb6cb49777ad64d",
+          "decimals": 8,
+          "underlyingAsset": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf"
+        },
+        {
+          "symbol": "LBTC",
+          "id": "0xecac9c5f704e954931349da37f60e39f515c11c10xe20fcbdbffc4dd138ce8b2e6fbb6cb49777ad64d",
+          "decimals": 8,
+          "underlyingAsset": "0xecac9c5f704e954931349da37f60e39f515c11c1"
+        }
+      ],
+      "preHackBtc": 3009.7752,
+      "preHackUsd": 231969394,
+      "troughBtc": 2115.1952,
+      "troughUsd": 163794648,
+      "troughDate": "2026-04-24",
+      "currentBtc": 2118.0732,
+      "currentUsd": 166154455,
+      "dropUsd": -65814940,
+      "dropBtc": -891.702,
+      "dropPct": -28.4,
+      "sharePctOfPre": 3.7
+    },
+    "Avalanche": {
+      "status": "ok",
+      "subgraphId": "2h9woxy8RTjHu1HJsCEnmzpPHFArU33avmUh4f71JpVn",
+      "reserves": [
+        {
+          "symbol": "BTC.b",
+          "id": "0x152b9d0fdc40c096757f570a51e494bd4b943e500xa97684ead0e402dc232d5a977953df7ecbab3cdb",
+          "decimals": 8,
+          "underlyingAsset": "0x152b9d0fdc40c096757f570a51e494bd4b943e50"
+        }
+      ],
+      "preHackBtc": 2092.6315,
+      "preHackUsd": 161283296,
+      "troughBtc": 1722.0364,
+      "troughUsd": 133673072,
+      "troughDate": "2026-04-25",
+      "currentBtc": 1716.9833,
+      "currentUsd": 134690539,
+      "dropUsd": -26592757,
+      "dropBtc": -375.6482,
+      "dropPct": -16.5,
+      "sharePctOfPre": 2.6
+    },
+    "BNB": {
+      "status": "ok",
+      "subgraphId": "7Jk85XgkV1MQ7u56hD8rr65rfASbayJXopugWkUoBMnZ",
+      "reserves": [
+        {
+          "symbol": "BTCB",
+          "id": "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c0xff75b6da14ffbbfd355daf7a2731456b3562ba6d",
+          "decimals": 18,
+          "underlyingAsset": "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c"
+        }
+      ],
+      "preHackBtc": 1027.1294,
+      "preHackUsd": 79162918,
+      "troughBtc": 923.651,
+      "troughUsd": 71524881,
+      "troughDate": "2026-04-24",
+      "currentBtc": 927.1841,
+      "currentUsd": 72733922,
+      "dropUsd": -6428996,
+      "dropBtc": -99.9453,
+      "dropPct": -8.1,
+      "sharePctOfPre": 1.3
+    },
+    "Scroll": {
+      "status": "no_btc_reserves",
+      "subgraphId": "74JwenoHZb2aAYVGCCSdPWzi9mm745dyHyQQVoZ7Sbub"
+    },
+    "Gnosis": {
+      "status": "no_btc_reserves",
+      "subgraphId": "HtcDaL8L8iZ2KQNNS44EBVmLruzxuNAz1RkBYdui1QUT"
+    },
+    "Linea": {
+      "status": "ok",
+      "subgraphId": "Gz2kjnmRV1fQj3R8cssoZa5y9VTanhrDo4Mh7nWW1wHa",
+      "reserves": [
+        {
+          "symbol": "WBTC",
+          "id": "0x3aab2285ddcddad8edf438c1bab47e1a9d05a9b40x89502c3731f69ddc95b65753708a07f8cd0373f4",
+          "decimals": 8,
+          "underlyingAsset": "0x3aab2285ddcddad8edf438c1bab47e1a9d05a9b4"
+        }
+      ],
+      "preHackBtc": 11.393,
+      "preHackUsd": 878083,
+      "troughBtc": 10.0892,
+      "troughUsd": 765175,
+      "troughDate": "2026-04-20",
+      "currentBtc": 9.9666,
+      "currentUsd": 781843,
+      "dropUsd": -96239,
+      "dropBtc": -1.4264,
+      "dropPct": -11,
+      "sharePctOfPre": 0
+    },
+    "Metis": {
+      "status": "no_btc_reserves",
+      "subgraphId": "https://metisapi.0xgraph.xyz/subgraphs/name/aave/protocol-v3-metis"
+    }
+  },
+  "perMarketSnapshot": {
+    "snapshotDates": {
+      "pre": "2026-04-17",
+      "post": "2026-04-27",
+      "trough": "2026-04-24",
+      "note": "pre=Apr 17 (pre-hack), post=Apr 27 (current), trough=minimum BTC deposits USD day across all chains"
+    },
+    "note": "All-chain per-market BTC data from Aave official subgraphs. USD = BTC × daily BTC/USD (Binance).",
+    "markets": [
+      {
+        "chain": "Ethereum",
+        "asset": "WBTC",
+        "decimals": 8,
+        "isBtc": true,
+        "preDepositBtc": 41133.778,
+        "preDepositUsd": 3170262538,
+        "currentDepositBtc": 29188.9239,
+        "currentDepositUsd": 2289755493,
+        "troughDepositBtc": 29281.4009,
+        "troughDepositUsd": 2267467651,
+        "troughDate": "2026-04-24",
+        "dropUsd": -880507045,
+        "dropPct": -27.8,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "chain": "Ethereum",
+        "asset": "cbBTC",
+        "decimals": 8,
+        "isBtc": true,
+        "preDepositBtc": 23895.6586,
+        "preDepositUsd": 1841686197,
+        "currentDepositBtc": 12473.2212,
+        "currentDepositUsd": 978474810,
+        "troughDepositBtc": 12475.8581,
+        "troughDepositUsd": 966094646,
+        "troughDate": "2026-04-24",
+        "dropUsd": -863211387,
+        "dropPct": -46.9,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "chain": "Ethereum",
+        "asset": "LBTC",
+        "decimals": 8,
+        "isBtc": true,
+        "preDepositBtc": 4044.3009,
+        "preDepositUsd": 311702361,
+        "currentDepositBtc": 1657.5414,
+        "currentDepositUsd": 130027556,
+        "troughDepositBtc": 1657.5413,
+        "troughDepositUsd": 128355243,
+        "troughDate": "2026-04-24",
+        "dropUsd": -181674806,
+        "dropPct": -58.3,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "chain": "Arbitrum",
+        "asset": "WBTC",
+        "underlyingAsset": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+        "decimals": 8,
+        "isBtc": true,
+        "preDepositBtc": 3019.3967,
+        "preDepositUsd": 232710940,
+        "currentDepositBtc": 2615.3777,
+        "currentDepositUsd": 205166026,
+        "troughDepositBtc": 2621.601,
+        "troughDepositUsd": 203009255,
+        "troughDate": "2026-04-24",
+        "dropUsd": -27544914,
+        "dropPct": -11.8,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "chain": "Base",
+        "asset": "cbBTC",
+        "underlyingAsset": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+        "decimals": 8,
+        "isBtc": true,
+        "preDepositBtc": 2972.0677,
+        "preDepositUsd": 229063201,
+        "currentDepositBtc": 2083.2973,
+        "currentDepositUsd": 163426423,
+        "troughDepositBtc": 2080.6174,
+        "troughDepositUsd": 161117041,
+        "troughDate": "2026-04-24",
+        "dropUsd": -65636778,
+        "dropPct": -28.7,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "chain": "Ethereum",
+        "asset": "tBTC",
+        "decimals": 18,
+        "isBtc": true,
+        "preDepositBtc": 2405.0472,
+        "preDepositUsd": 185361796,
+        "currentDepositBtc": 2005.1338,
+        "currentDepositUsd": 157294804,
+        "troughDepositBtc": 2018.983,
+        "troughDepositUsd": 154121393,
+        "troughDate": "2026-04-21",
+        "dropUsd": -28066991,
+        "dropPct": -15.1,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "chain": "Avalanche",
+        "asset": "BTC.b",
+        "underlyingAsset": "0x152b9d0fdc40c096757f570a51e494bd4b943e50",
+        "decimals": 8,
+        "isBtc": true,
+        "preDepositBtc": 2092.6315,
+        "preDepositUsd": 161283296,
+        "currentDepositBtc": 1716.9833,
+        "currentDepositUsd": 134690539,
+        "troughDepositBtc": 1722.0364,
+        "troughDepositUsd": 133673072,
+        "troughDate": "2026-04-25",
+        "dropUsd": -26592757,
+        "dropPct": -16.5,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "chain": "BNB",
+        "asset": "BTCB",
+        "underlyingAsset": "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+        "decimals": 18,
+        "isBtc": true,
+        "preDepositBtc": 1027.1294,
+        "preDepositUsd": 79162918,
+        "currentDepositBtc": 927.1841,
+        "currentDepositUsd": 72733922,
+        "troughDepositBtc": 923.651,
+        "troughDepositUsd": 71524881,
+        "troughDate": "2026-04-24",
+        "dropUsd": -6428996,
+        "dropPct": -8.1,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "chain": "Polygon",
+        "asset": "WBTC",
+        "underlyingAsset": "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
+        "decimals": 8,
+        "isBtc": true,
+        "preDepositBtc": 908.842,
+        "preDepositUsd": 70046267,
+        "currentDepositBtc": 862.1622,
+        "currentDepositUsd": 67633209,
+        "troughDepositBtc": 883.5659,
+        "troughDepositUsd": 65208743,
+        "troughDate": "2026-04-19",
+        "dropUsd": -2413058,
+        "dropPct": -3.4,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "chain": "Optimism",
+        "asset": "WBTC",
+        "underlyingAsset": "0x68f180fcce6836688e9084f035309e29bf0a2095",
+        "decimals": 8,
+        "isBtc": true,
+        "preDepositBtc": 315.2339,
+        "preDepositUsd": 24295707,
+        "currentDepositBtc": 301.7738,
+        "currentDepositUsd": 23672958,
+        "troughDepositBtc": 305.1704,
+        "troughDepositUsd": 22522124,
+        "troughDate": "2026-04-19",
+        "dropUsd": -622749,
+        "dropPct": -2.6,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "chain": "Base",
+        "asset": "LBTC",
+        "underlyingAsset": "0xecac9c5f704e954931349da37f60e39f515c11c1",
+        "decimals": 8,
+        "isBtc": true,
+        "preDepositBtc": 28.9046,
+        "preDepositUsd": 2227737,
+        "currentDepositBtc": 27.1138,
+        "currentDepositUsd": 2126974,
+        "troughDepositBtc": 27.1821,
+        "troughDepositUsd": 2074978,
+        "troughDate": "2026-04-21",
+        "dropUsd": -100763,
+        "dropPct": -4.5,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "chain": "Linea",
+        "asset": "WBTC",
+        "underlyingAsset": "0x3aab2285ddcddad8edf438c1bab47e1a9d05a9b4",
+        "decimals": 8,
+        "isBtc": true,
+        "preDepositBtc": 11.393,
+        "preDepositUsd": 878083,
+        "currentDepositBtc": 9.9666,
+        "currentDepositUsd": 781843,
+        "troughDepositBtc": 10.0892,
+        "troughDepositUsd": 765175,
+        "troughDate": "2026-04-20",
+        "dropUsd": -96239,
+        "dropPct": -11,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "chain": "Base",
+        "asset": "tBTC",
+        "underlyingAsset": "0x236aa50979d5f3de3bd1eeb40e81137f22ab794b",
+        "decimals": 18,
+        "isBtc": true,
+        "preDepositBtc": 8.8029,
+        "preDepositUsd": 678457,
+        "currentDepositBtc": 7.6621,
+        "currentDepositUsd": 601058,
+        "troughDepositBtc": 7.6599,
+        "troughDepositUsd": 593164,
+        "troughDate": "2026-04-24",
+        "dropUsd": -77399,
+        "dropPct": -11.4,
+        "source": "aave-official-subgraph"
+      }
+    ]
+  },
+  "perMarketSnapshot_ethereum": {
+    "snapshotDates": {
+      "pre": "2026-04-17",
+      "post": "2026-04-27",
+      "trough": "2026-04-24",
+      "note": "pre=Apr 17 (pre-hack), post=Apr 27 (current), trough=minimum BTC deposits day"
+    },
+    "note": "Daily per-market data from Aave official subgraph. BTC amounts: totalATokenSupply / 10^decimals. USD = BTC × daily BTC/USD (Binance).",
+    "markets": [
+      {
+        "asset": "WBTC",
+        "isBtc": true,
+        "decimals": 8,
+        "preDepositUsd": 3170262698,
+        "preDepositBtc": 41133.7801,
+        "postDepositUsd": 2295815169,
+        "postDepositBtc": 29196.7905,
+        "troughDepositUsd": 2267467811,
+        "troughDepositBtc": 29281.403,
+        "troughDate": "2026-04-24",
+        "dropUsd": -874447529,
+        "dropPct": -27.6,
+        "preBorrowUsd": 83109835,
+        "postBorrowUsd": 105399053,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "asset": "cbBTC",
+        "isBtc": true,
+        "decimals": 8,
+        "preDepositUsd": 1841686199,
+        "preDepositBtc": 23895.6586,
+        "postDepositUsd": 980799945,
+        "postDepositBtc": 12473.2212,
+        "troughDepositUsd": 966094648,
+        "troughDepositBtc": 12475.8581,
+        "troughDate": "2026-04-24",
+        "dropUsd": -860886254,
+        "dropPct": -46.7,
+        "preBorrowUsd": 24541745,
+        "postBorrowUsd": 41654728,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "asset": "tBTC",
+        "isBtc": true,
+        "decimals": 18,
+        "preDepositUsd": 185361870,
+        "preDepositBtc": 2405.0481,
+        "postDepositUsd": 157668657,
+        "postDepositBtc": 2005.1347,
+        "troughDepositUsd": 155252536,
+        "troughDepositBtc": 2004.8849,
+        "troughDate": "2026-04-24",
+        "dropUsd": -27693213,
+        "dropPct": -14.9,
+        "preBorrowUsd": 4161555,
+        "postBorrowUsd": 853609,
+        "source": "aave-official-subgraph"
+      },
+      {
+        "asset": "LBTC",
+        "isBtc": true,
+        "decimals": 8,
+        "preDepositUsd": 311702361,
+        "preDepositBtc": 4044.3009,
+        "postDepositUsd": 130336538,
+        "postDepositBtc": 1657.5414,
+        "troughDepositUsd": 128355243,
+        "troughDepositBtc": 1657.5413,
+        "troughDate": "2026-04-24",
+        "dropUsd": -181365824,
+        "dropPct": -58.2,
+        "preBorrowUsd": 1311,
+        "postBorrowUsd": 1337,
+        "source": "aave-official-subgraph"
+      }
+    ]
+  },
+  "btcDailyTimeline": {
+    "WBTC": {
+      "2026-04-17": {
+        "date": "2026-04-17",
+        "deposits_btc": 41133.78007242,
+        "borrows_btc": 1078.34018285,
+        "net_btc": 40055.43988957,
+        "deposits_usd": 3170262697.7415543,
+        "borrows_usd": 83109834.5726152,
+        "net_usd": 3087152863.168939,
+        "price_usd": 77072,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776469919
+      },
+      "2026-04-18": {
+        "date": "2026-04-18",
+        "deposits_btc": 39140.71107972,
+        "borrows_btc": 1405.16976703,
+        "net_btc": 37735.54131269,
+        "deposits_usd": 2962629309.275507,
+        "borrows_usd": 106359772.76529066,
+        "net_usd": 2856269536.510216,
+        "price_usd": 75691.76,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776556715
+      },
+      "2026-04-19": {
+        "date": "2026-04-19",
+        "deposits_btc": 34522.62469037,
+        "borrows_btc": 2176.49438345,
+        "net_btc": 32346.13030692,
+        "deposits_usd": 2547831497.6475015,
+        "borrows_usd": 160629181.42355636,
+        "net_usd": 2387202316.223945,
+        "price_usd": 73801.79,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776643151
+      },
+      "2026-04-20": {
+        "date": "2026-04-20",
+        "deposits_btc": 32108.40821132,
+        "borrows_btc": 2099.07770439,
+        "net_btc": 30009.330506929997,
+        "deposits_usd": 2435132823.902474,
+        "borrows_usd": 159196089.20631084,
+        "net_usd": 2275936734.6961627,
+        "price_usd": 75840.97,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776728963
+      },
+      "2026-04-21": {
+        "date": "2026-04-21",
+        "deposits_btc": 30539.69772461,
+        "borrows_btc": 1795.47583733,
+        "net_btc": 28744.22188728,
+        "deposits_usd": 2331282946.4604874,
+        "borrows_usd": 137059712.83979848,
+        "net_usd": 2194223233.620689,
+        "price_usd": 76336.15,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776815855
+      },
+      "2026-04-22": {
+        "date": "2026-04-22",
+        "deposits_btc": 30092.42559894,
+        "borrows_btc": 1413.78198506,
+        "net_btc": 28678.64361388,
+        "deposits_usd": 2352572569.731819,
+        "borrows_usd": 110526973.19787723,
+        "net_usd": 2242045596.5339417,
+        "price_usd": 78178.23,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776902351
+      },
+      "2026-04-23": {
+        "date": "2026-04-23",
+        "deposits_btc": 29308.49388064,
+        "borrows_btc": 1354.85301987,
+        "net_btc": 27953.64086077,
+        "deposits_usd": 2293608873.694307,
+        "borrows_usd": 106027383.10541612,
+        "net_usd": 2187581490.588891,
+        "price_usd": 78257.48,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776988307
+      },
+      "2026-04-24": {
+        "date": "2026-04-24",
+        "deposits_btc": 29281.40300382,
+        "borrows_btc": 1348.77101116,
+        "net_btc": 27932.63199266,
+        "deposits_usd": 2267467810.9892,
+        "borrows_usd": 104444956.13142838,
+        "net_usd": 2163022854.857772,
+        "price_usd": 77437.13,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777075067
+      },
+      "2026-04-25": {
+        "date": "2026-04-25",
+        "deposits_btc": 29229.415446,
+        "borrows_btc": 1342.61775028,
+        "net_btc": 27886.79769572,
+        "deposits_usd": 2268933373.99575,
+        "borrows_usd": 104220702.86548501,
+        "net_usd": 2164712671.130265,
+        "price_usd": 77625,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777161551
+      },
+      "2026-04-26": {
+        "date": "2026-04-26",
+        "deposits_btc": 29196.65033116,
+        "borrows_btc": 1340.52874424,
+        "net_btc": 27856.12158692,
+        "deposits_usd": 2296536983.2557344,
+        "borrows_usd": 105442706.72649501,
+        "net_usd": 2191094276.529239,
+        "price_usd": 78657.55,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777247111
+      },
+      "2026-04-27": {
+        "date": "2026-04-27",
+        "deposits_btc": 29196.79049485,
+        "borrows_btc": 1340.40148202,
+        "net_btc": 27856.38901283,
+        "deposits_usd": 2295815168.746768,
+        "borrows_usd": 105399052.51486355,
+        "net_usd": 2190416116.2319045,
+        "price_usd": 78632.45,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777248275
+      }
+    },
+    "cbBTC": {
+      "2026-04-17": {
+        "date": "2026-04-17",
+        "deposits_btc": 23895.65859346,
+        "borrows_btc": 318.42621491,
+        "net_btc": 23577.23237855,
+        "deposits_usd": 1841686199.1151493,
+        "borrows_usd": 24541745.23554352,
+        "net_usd": 1817144453.8796058,
+        "price_usd": 77072,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776468275
+      },
+      "2026-04-18": {
+        "date": "2026-04-18",
+        "deposits_btc": 17615.83665564,
+        "borrows_btc": 795.71408698,
+        "net_btc": 16820.12256866,
+        "deposits_usd": 1333373680.3379054,
+        "borrows_usd": 60228999.700309284,
+        "net_usd": 1273144680.6375961,
+        "price_usd": 75691.76,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776556691
+      },
+      "2026-04-19": {
+        "date": "2026-04-19",
+        "deposits_btc": 13899.07828961,
+        "borrows_btc": 484.87814502,
+        "net_btc": 13414.20014459,
+        "deposits_usd": 1025776857.1233563,
+        "borrows_usd": 35784875.03435558,
+        "net_usd": 989991982.0890008,
+        "price_usd": 73801.79,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776642803
+      },
+      "2026-04-20": {
+        "date": "2026-04-20",
+        "deposits_btc": 13260.28553782,
+        "borrows_btc": 465.09303213,
+        "net_btc": 12795.19250569,
+        "deposits_usd": 1005672917.6652405,
+        "borrows_usd": 35273106.696980365,
+        "net_usd": 970399810.9682602,
+        "price_usd": 75840.97,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776728759
+      },
+      "2026-04-21": {
+        "date": "2026-04-21",
+        "deposits_btc": 12717.23479266,
+        "borrows_btc": 436.91066236,
+        "net_btc": 12280.3241303,
+        "deposits_usd": 970784742.7177125,
+        "borrows_usd": 33352077.858512312,
+        "net_usd": 937432664.8592002,
+        "price_usd": 76336.15,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776815927
+      },
+      "2026-04-22": {
+        "date": "2026-04-22",
+        "deposits_btc": 12701.15700199,
+        "borrows_btc": 590.72608294,
+        "net_btc": 12110.430919049999,
+        "deposits_usd": 992953973.3676846,
+        "borrows_usd": 46181919.57908239,
+        "net_usd": 946772053.7886021,
+        "price_usd": 78178.23,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776900947
+      },
+      "2026-04-23": {
+        "date": "2026-04-23",
+        "deposits_btc": 12573.19473319,
+        "borrows_btc": 597.97609006,
+        "net_btc": 11975.21864313,
+        "deposits_usd": 983946535.3687216,
+        "borrows_usd": 46796101.90834865,
+        "net_usd": 937150433.460373,
+        "price_usd": 78257.48,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776985643
+      },
+      "2026-04-24": {
+        "date": "2026-04-24",
+        "deposits_btc": 12475.85813635,
+        "borrows_btc": 508.05952047,
+        "net_btc": 11967.79861588,
+        "deposits_usd": 966094648.3660927,
+        "borrows_usd": 39342671.134373054,
+        "net_usd": 926751977.2317196,
+        "price_usd": 77437.13,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777073675
+      },
+      "2026-04-25": {
+        "date": "2026-04-25",
+        "deposits_btc": 12469.49277549,
+        "borrows_btc": 529.32297397,
+        "net_btc": 11940.16980152,
+        "deposits_usd": 967944376.6974113,
+        "borrows_usd": 41088695.85442125,
+        "net_usd": 926855680.84299,
+        "price_usd": 77625,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777161419
+      },
+      "2026-04-26": {
+        "date": "2026-04-26",
+        "deposits_btc": 12473.22123226,
+        "borrows_btc": 529.73966646,
+        "net_btc": 11943.4815658,
+        "deposits_usd": 981113022.7375526,
+        "borrows_usd": 41668024.301560774,
+        "net_usd": 939444998.4359919,
+        "price_usd": 78657.55,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777247735
+      },
+      "2026-04-27": {
+        "date": "2026-04-27",
+        "deposits_btc": 12473.22123226,
+        "borrows_btc": 529.73966646,
+        "net_btc": 11943.4815658,
+        "deposits_usd": 980799944.8846228,
+        "borrows_usd": 41654727.83593262,
+        "net_usd": 939145217.0486902,
+        "price_usd": 78632.45,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "carried": true
+      }
+    },
+    "tBTC": {
+      "2026-04-17": {
+        "date": "2026-04-17",
+        "deposits_btc": 2405.0481376529883,
+        "borrows_btc": 53.99568317463028,
+        "net_btc": 2351.052454478358,
+        "deposits_usd": 185361870.06519112,
+        "borrows_usd": 4161555.293635105,
+        "net_usd": 181200314.771556,
+        "price_usd": 77072,
+        "decimals": 18,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776456131
+      },
+      "2026-04-18": {
+        "date": "2026-04-18",
+        "deposits_btc": 2401.5403148716027,
+        "borrows_btc": 54.0008169951927,
+        "net_btc": 2347.53949787641,
+        "deposits_usd": 181776813.14358577,
+        "borrows_usd": 4087416.879804047,
+        "net_usd": 177689396.26378173,
+        "price_usd": 75691.76,
+        "decimals": 18,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776550715
+      },
+      "2026-04-19": {
+        "date": "2026-04-19",
+        "deposits_btc": 2184.5707198249365,
+        "borrows_btc": 49.001178015891576,
+        "net_btc": 2135.569541809045,
+        "deposits_usd": 161225229.5046688,
+        "borrows_usd": 3616374.6496814466,
+        "net_usd": 157608854.85498735,
+        "price_usd": 73801.79,
+        "decimals": 18,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776640679
+      },
+      "2026-04-20": {
+        "date": "2026-04-20",
+        "deposits_btc": 2052.7176592339924,
+        "borrows_btc": 48.98766413746654,
+        "net_btc": 2003.729995096526,
+        "deposits_usd": 155680098.41243544,
+        "borrows_usd": 3715271.9662196757,
+        "net_usd": 151964826.44621578,
+        "price_usd": 75840.97,
+        "decimals": 18,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776727511
+      },
+      "2026-04-21": {
+        "date": "2026-04-21",
+        "deposits_btc": 2018.9840128632823,
+        "borrows_btc": 48.98766413746654,
+        "net_btc": 1969.9963487258158,
+        "deposits_usd": 154121466.45353344,
+        "borrows_usd": 3739529.677747266,
+        "net_usd": 150381936.77578616,
+        "price_usd": 76336.15,
+        "decimals": 18,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776815315
+      },
+      "2026-04-22": {
+        "date": "2026-04-22",
+        "deposits_btc": 2044.9023916701128,
+        "borrows_btc": 11.077550741907105,
+        "net_btc": 2033.8248409282057,
+        "deposits_usd": 159866849.50353616,
+        "borrows_usd": 866023.3097374842,
+        "net_usd": 159000826.19379866,
+        "price_usd": 78178.23,
+        "decimals": 18,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776901139
+      },
+      "2026-04-23": {
+        "date": "2026-04-23",
+        "deposits_btc": 2013.742565079789,
+        "borrows_btc": 11.04795300248195,
+        "net_btc": 2002.694612077307,
+        "deposits_usd": 157590418.51188028,
+        "borrows_usd": 864584.9611326711,
+        "net_usd": 156725833.5507476,
+        "price_usd": 78257.48,
+        "decimals": 18,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776984431
+      },
+      "2026-04-24": {
+        "date": "2026-04-24",
+        "deposits_btc": 2004.8849484984958,
+        "borrows_btc": 10.997977491042064,
+        "net_btc": 1993.8869710074537,
+        "deposits_usd": 155252536.39192134,
+        "borrows_usd": 851651.8127108982,
+        "net_usd": 154400884.57921043,
+        "price_usd": 77437.13,
+        "decimals": 18,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777073159
+      },
+      "2026-04-25": {
+        "date": "2026-04-25",
+        "deposits_btc": 2005.1258663566946,
+        "borrows_btc": 10.85568476410615,
+        "net_btc": 1994.2701815925884,
+        "deposits_usd": 155647895.37593842,
+        "borrows_usd": 842672.5298137398,
+        "net_usd": 154805222.84612468,
+        "price_usd": 77625,
+        "decimals": 18,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777130855
+      },
+      "2026-04-26": {
+        "date": "2026-04-26",
+        "deposits_btc": 2005.1347397725374,
+        "borrows_btc": 10.85568476410615,
+        "net_btc": 1994.2790550084312,
+        "deposits_usd": 157718986.05039534,
+        "borrows_usd": 853881.5671169177,
+        "net_usd": 156865104.48327842,
+        "price_usd": 78657.55,
+        "decimals": 18,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777241303
+      },
+      "2026-04-27": {
+        "date": "2026-04-27",
+        "deposits_btc": 2005.1347397725374,
+        "borrows_btc": 10.85568476410615,
+        "net_btc": 1994.2790550084312,
+        "deposits_usd": 157668657.16842705,
+        "borrows_usd": 853609.0894293386,
+        "net_usd": 156815048.0789977,
+        "price_usd": 78632.45,
+        "decimals": 18,
+        "source": "aave-official-subgraph",
+        "carried": true
+      }
+    },
+    "LBTC": {
+      "2026-04-17": {
+        "date": "2026-04-17",
+        "deposits_btc": 4044.30093151,
+        "borrows_btc": 0.0170045,
+        "net_btc": 4044.28392701,
+        "deposits_usd": 311702361.3933387,
+        "borrows_usd": 1310.570824,
+        "net_usd": 311701050.8225147,
+        "price_usd": 77072,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776468611
+      },
+      "2026-04-18": {
+        "date": "2026-04-18",
+        "deposits_btc": 3711.6871582,
+        "borrows_btc": 0.0170045,
+        "net_btc": 3711.6701537,
+        "deposits_usd": 280944133.5735564,
+        "borrows_usd": 1287.1005329199998,
+        "net_usd": 280942846.4730235,
+        "price_usd": 75691.76,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776552419
+      },
+      "2026-04-19": {
+        "date": "2026-04-19",
+        "deposits_btc": 2429.35729097,
+        "borrows_btc": 0.0170045,
+        "net_btc": 2429.34028647,
+        "deposits_usd": 179290916.62313682,
+        "borrows_usd": 1254.9625380549999,
+        "net_usd": 179289661.66059878,
+        "price_usd": 73801.79,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776641255
+      },
+      "2026-04-20": {
+        "date": "2026-04-20",
+        "deposits_btc": 1989.5757721,
+        "borrows_btc": 0.0170045,
+        "net_btc": 1989.5587676,
+        "deposits_usd": 150891356.44456294,
+        "borrows_usd": 1289.637774365,
+        "net_usd": 150890066.80678856,
+        "price_usd": 75840.97,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776711179
+      },
+      "2026-04-21": {
+        "date": "2026-04-21",
+        "deposits_btc": 2015.91373534,
+        "borrows_btc": 0.0170045,
+        "net_btc": 2015.89673084,
+        "deposits_usd": 153887093.28797454,
+        "borrows_usd": 1298.0580626749997,
+        "net_usd": 153885795.22991183,
+        "price_usd": 76336.15,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776815987
+      },
+      "2026-04-22": {
+        "date": "2026-04-22",
+        "deposits_btc": 1748.60785943,
+        "borrows_btc": 0.0170045,
+        "net_btc": 1748.59085493,
+        "deposits_usd": 136703067.4143262,
+        "borrows_usd": 1329.3817120349997,
+        "net_usd": 136701738.03261417,
+        "price_usd": 78178.23,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776897683
+      },
+      "2026-04-23": {
+        "date": "2026-04-23",
+        "deposits_btc": 1665.06319307,
+        "borrows_btc": 0.0170045,
+        "net_btc": 1665.04618857,
+        "deposits_usd": 130303649.53041165,
+        "borrows_usd": 1330.7293186599998,
+        "net_usd": 130302318.801093,
+        "price_usd": 78257.48,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1776963467
+      },
+      "2026-04-24": {
+        "date": "2026-04-24",
+        "deposits_btc": 1657.54132711,
+        "borrows_btc": 0.0170045,
+        "net_btc": 1657.5243226100001,
+        "deposits_usd": 128355243.22778961,
+        "borrows_usd": 1316.779677085,
+        "net_usd": 128353926.44811253,
+        "price_usd": 77437.13,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777045283
+      },
+      "2026-04-25": {
+        "date": "2026-04-25",
+        "deposits_btc": 1657.54132711,
+        "borrows_btc": 0.01700289,
+        "net_btc": 1657.5243242200002,
+        "deposits_usd": 128666645.51691376,
+        "borrows_usd": 1319.84933625,
+        "net_usd": 128665325.6675775,
+        "price_usd": 77625,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777116563
+      },
+      "2026-04-26": {
+        "date": "2026-04-26",
+        "deposits_btc": 1657.54135689,
+        "borrows_btc": 0.01700289,
+        "net_btc": 1657.5243540000001,
+        "deposits_usd": 130378142.15664303,
+        "borrows_usd": 1337.4056703195001,
+        "net_usd": 130376804.75097272,
+        "price_usd": 78657.55,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "raw_ts": 1777199075
+      },
+      "2026-04-27": {
+        "date": "2026-04-27",
+        "deposits_btc": 1657.54135689,
+        "borrows_btc": 0.01700289,
+        "net_btc": 1657.5243540000001,
+        "deposits_usd": 130336537.86858508,
+        "borrows_usd": 1336.9788977805,
+        "net_usd": 130335200.8896873,
+        "price_usd": 78632.45,
+        "decimals": 8,
+        "source": "aave-official-subgraph",
+        "carried": true
+      }
+    }
+  },
+  "highlight_cbBTC": {
+    "title": "cbBTC Collateral — Hardest Hit BTC Asset",
+    "preDepositUsd": 1841686199,
+    "postDepositUsd": 980799945,
+    "dropUsd": -860886254,
+    "dropPct": -46.7,
+    "preDepositBtc": 23895.6586,
+    "currentDepositBtc": 12473.2212,
+    "context": "cbBTC was used as collateral to borrow stablecoins on Aave. The Kelp DAO exploit caused mass liquidations as rsETH value collapsed."
+  },
+  "highlight_PYUSD": {
+    "title": "PYUSD — Stablecoin Most Affected (estimated, non-BTC market)",
+    "preDepositUsd": 161000000,
+    "postDepositUsd": 33000000,
+    "dropUsd": -128000000,
+    "dropPct": -79.5,
+    "context": "PYUSD deposits dropped ~79.5%. Borrowed against BTC-collateral that was liquidated. Source: Messari subgraph snapshot Apr 17–21."
+  },
+  "protocolTvlTimeline": [
+    {
+      "date": "2026-04-17",
+      "totalUsd": 25668368036
+    },
+    {
+      "date": "2026-04-18",
+      "totalUsd": 25953969005
+    },
+    {
+      "date": "2026-04-19",
+      "totalUsd": 21538038790
+    },
+    {
+      "date": "2026-04-20",
+      "totalUsd": 17535923858
+    },
+    {
+      "date": "2026-04-21",
+      "totalUsd": 16129080792
+    },
+    {
+      "date": "2026-04-22",
+      "totalUsd": 15168020210
+    },
+    {
+      "date": "2026-04-23",
+      "totalUsd": 14819674079
+    },
+    {
+      "date": "2026-04-24",
+      "totalUsd": 13851761468
+    },
+    {
+      "date": "2026-04-25",
+      "totalUsd": 13812305742
+    },
+    {
+      "date": "2026-04-26",
+      "totalUsd": 13731924204
+    },
+    {
+      "date": "2026-04-27",
+      "totalUsd": 14063906193
+    }
+  ]
+}
