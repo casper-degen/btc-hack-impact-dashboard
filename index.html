@@ -217,7 +217,7 @@ tfoot tr:hover td { background: var(--bg-tfoot); }
 }
 </style>
 <script>
-(function(){var t=localStorage.getItem('btc-dashboard-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();
+(function(){var t=localStorage.getItem('btc-dashboard-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();
 </script>
 </head>
 <body>
