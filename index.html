@@ -372,12 +372,12 @@ function renderAave(data) {
   // Compute daily aggregated BTC net TVL (deposits_usd - borrows_usd across all BTC assets)
   const DATES = ['2026-04-17','2026-04-18','2026-04-19','2026-04-20','2026-04-21','2026-04-22','2026-04-23','2026-04-24','2026-04-25','2026-04-26','2026-04-27','2026-04-28','2026-04-29'];
   const btcNetUsd = DATES.map(d => {
-    let net = 0, dep = 0;
+    let net = 0, dep = 0, netBtc = 0;
     Object.values(btcTl).forEach(assetDays => {
       const v = assetDays[d];
-      if (v) { net += (v.net_usd || 0); dep += (v.deposits_usd || 0); }
+      if (v) { net += (v.net_usd || 0); dep += (v.deposits_usd || 0); netBtc += (v.net_btc || 0); }
     });
-    return { date: d, netUsd: net, depUsd: dep };
+    return { date: d, netUsd: net, depUsd: dep, netBtc };
   });
 
   // Compute daily BTC deposits (native BTC) summed across all assets
@@ -405,8 +405,8 @@ function renderAave(data) {
   const aaveRecoveryBtc   = km.btcMarkets.currentBtc - km.btcMarkets.troughBtc;
   const aaveRecoveryPct   = aaveDropAtTrough > 0 ? (aaveRecoveryBtc / aaveDropAtTrough) * 100 : 0;
 
-  // Section 2 chart: BTC net TVL (deposits - borrows USD)
-  const s2Points = btcNetUsd.map(e => ({ date: e.date, value: e.netUsd }));
+  // Section 2 chart: BTC net TVL in native BTC units
+  const s2Points = btcNetUsd.map(e => ({ date: e.date, value: e.netBtc }));
 
   // Section 3 chart 1: total BTC deposits (native)
   const s3BtcPoints = btcDepBtc;
@@ -502,8 +502,8 @@ function renderAave(data) {
   </div>
 </div>
 <div class="chart-wrap">
-  <div class="chart-label">Aave v3 — BTC Collateral Net TVL (Ethereum · WBTC+cbBTC+tBTC+LBTC, Deposits−Borrows) · Apr 17 → Apr 29 · Subgraph</div>
-  ${buildLineChart(s2Points, ANNOTS_BTC, { color: '#34d399', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
+  <div class="chart-label">Aave v3 — BTC Collateral Net TVL (Ethereum · WBTC+cbBTC+tBTC+LBTC, Deposits−Borrows) · Apr 17 → Apr 29 · Subgraph · in BTC</div>
+  ${buildLineChart(s2Points, ANNOTS_BTC, { color: '#34d399', yFmt: v => fmtBTC(v) })}
 </div>
 
 <!-- Section 3: BTC Market Breakdown -->
@@ -549,8 +549,8 @@ function renderMorpho(data) {
   const protTroughDropPct = ((protTrough.totalUsd - protPre.totalUsd) / protPre.totalUsd) * 100;
   const protCurDropPct    = ((protCur.totalUsd - protPre.totalUsd) / protPre.totalUsd) * 100;
 
-  // Section 2: Daily BTC collateral net TVL (USD) — morpho collateral is the "net"
-  const s2Points = DATES.map(d => ({ date: d, value: tl[d].usd }));
+  // Section 2: Daily BTC collateral net TVL in native BTC units
+  const s2Points = DATES.map(d => ({ date: d, value: tl[d].btc }));
 
   // Section 3 chart 1: BTC native
   const s3BtcPoints = DATES.map(d => ({ date: d, value: tl[d].btc }));
@@ -641,8 +641,8 @@ function renderMorpho(data) {
   </div>
 </div>
 <div class="chart-wrap">
-  <div class="chart-label">Morpho Blue — BTC Collateral Net TVL (USD) · Apr 17 → Apr 26 · Morpho GraphQL</div>
-  ${buildLineChart(s2Points, ANNOTS_BTC, { color: '#34d399', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
+  <div class="chart-label">Morpho Blue — BTC Collateral Net TVL · Apr 17 → Apr 26 · Morpho GraphQL · in BTC</div>
+  ${buildLineChart(s2Points, ANNOTS_BTC, { color: '#34d399', yFmt: v => fmtBTC(v) })}
 </div>
 
 <!-- Section 3: BTC Market Breakdown -->
@@ -706,8 +706,8 @@ function renderSpark(data) {
   const protTroughDropPct = ((protTrough.totalUsd - protPre.totalUsd) / protPre.totalUsd) * 100;
   const protCurChangePct  = ((protCur.totalUsd - protPre.totalUsd) / protPre.totalUsd) * 100;
 
-  // Section 2: BTC change (gain or loss)
-  const s2Points = btcNetUsd.map(e => ({ date: e.date, value: e.netUsd }));
+  // Section 2: BTC collateral in native BTC units (deposits_btc proxy — Spark has no borrows)
+  const s2Points = btcDepBtc.map(e => ({ date: e.date, value: e.value }));
   const s3BtcPoints = btcDepBtc;
 
   const isGain = km.btcMarkets.dropBtc >= 0;
@@ -803,8 +803,8 @@ function renderSpark(data) {
   </div>
 </div>
 <div class="chart-wrap">
-  <div class="chart-label">Spark Protocol — BTC Collateral Net TVL (Ethereum · WBTC+cbBTC+LBTC+tBTC, Deposits−Borrows) · Apr 17 → Apr 29 · Subgraph</div>
-  ${buildLineChart(s2Points, ANNOTS_BTC, { color: '#34d399', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
+  <div class="chart-label">Spark Protocol — BTC Collateral Net TVL (Ethereum · WBTC+cbBTC+LBTC+tBTC, Deposits) · Apr 17 → Apr 29 · Subgraph · in BTC</div>
+  ${buildLineChart(s2Points, ANNOTS_BTC, { color: '#34d399', yFmt: v => fmtBTC(v) })}
 </div>
 
 <!-- Section 3: BTC Market Breakdown -->
