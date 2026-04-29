@@ -370,7 +370,7 @@ function renderAave(data) {
   const cb  = data.chainBreakdown || {};
 
   // Compute daily aggregated BTC net TVL (deposits_usd - borrows_usd across all BTC assets)
-  const DATES = ['2026-04-17','2026-04-18','2026-04-19','2026-04-20','2026-04-21','2026-04-22','2026-04-23','2026-04-24','2026-04-25','2026-04-26','2026-04-27'];
+  const DATES = ['2026-04-17','2026-04-18','2026-04-19','2026-04-20','2026-04-21','2026-04-22','2026-04-23','2026-04-24','2026-04-25','2026-04-26','2026-04-27','2026-04-28','2026-04-29'];
   const btcNetUsd = DATES.map(d => {
     let net = 0, dep = 0;
     Object.values(btcTl).forEach(assetDays => {
@@ -417,12 +417,12 @@ function renderAave(data) {
   const ANNOTS_PROTO = [
     { date: '2026-04-18', label: 'Hack', color: '#f87171' },
     { date: '2026-04-25', label: 'Trough', color: '#fbbf24' },
-    { date: '2026-04-27', label: 'Current', color: '#34d399' },
+    { date: '2026-04-29', label: 'Current', color: '#34d399' },
   ];
   const ANNOTS_BTC = [
     { date: '2026-04-17', label: 'Pre-Hack', color: '#94a3b8' },
     { date: '2026-04-24', label: 'Trough', color: '#fbbf24' },
-    { date: '2026-04-27', label: 'Current', color: '#34d399' },
+    { date: '2026-04-29', label: 'Current', color: '#34d399' },
   ];
 
   // BTC markets table — filter to isBtc from perMarketSnapshot (multichain), sort by preDepositBtc desc
@@ -473,7 +473,7 @@ function renderAave(data) {
   </div>
 </div>
 <div class="chart-wrap">
-  <div class="chart-label">Aave v3 — Protocol TVL (Multichain, All Assets) · Apr 17 → Apr 27 · DefiLlama</div>
+  <div class="chart-label">Aave v3 — Protocol TVL (Multichain, All Assets) · Apr 17 → Apr 29 · DefiLlama</div>
   ${buildLineChart(s1Points, ANNOTS_PROTO, { color: '#3b82f6', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
 </div>
 
@@ -502,7 +502,7 @@ function renderAave(data) {
   </div>
 </div>
 <div class="chart-wrap">
-  <div class="chart-label">Aave v3 — BTC Collateral Net TVL (Ethereum · WBTC+cbBTC+tBTC+LBTC, Deposits−Borrows) · Apr 17 → Apr 27 · Subgraph</div>
+  <div class="chart-label">Aave v3 — BTC Collateral Net TVL (Ethereum · WBTC+cbBTC+tBTC+LBTC, Deposits−Borrows) · Apr 17 → Apr 29 · Subgraph</div>
   ${buildLineChart(s2Points, ANNOTS_BTC, { color: '#34d399', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
 </div>
 
@@ -524,7 +524,7 @@ function renderAave(data) {
   </tfoot>
 </table>
 <div class="footer">
-  Data sources: Aave official subgraphs (11 chains) · DefiLlama protocol/aave-v3 (multichain TVL) · Generated Apr 27, 2026 UTC
+  Data sources: Aave official subgraphs (11 chains) · DefiLlama protocol/aave-v3 (multichain TVL) · Generated Apr 29, 2026 UTC
 </div>`;
 
   document.getElementById('aave-content').innerHTML = html;
@@ -663,7 +663,7 @@ function renderMorpho(data) {
   </tfoot>
 </table>
 <div class="footer">
-  Data sources: Morpho Blue GraphQL API (blue-api.morpho.org) · DefiLlama protocol/morpho-blue · Generated Apr 27, 2026 UTC
+  Data sources: Morpho Blue GraphQL API (blue-api.morpho.org) · DefiLlama protocol/morpho-blue · Generated Apr 29, 2026 UTC · Morpho data through Apr 26 (Morpho API regression)
 </div>`;
 
   document.getElementById('morpho-content').innerHTML = html;
@@ -676,7 +676,7 @@ function renderSpark(data) {
   const btcTl = data.btcDailyTimeline || {};
   const pms = data.perMarketSnapshot;
 
-  const DATES = ['2026-04-17','2026-04-18','2026-04-19','2026-04-20','2026-04-21','2026-04-22','2026-04-23','2026-04-24','2026-04-25','2026-04-26','2026-04-27'];
+  const DATES = ['2026-04-17','2026-04-18','2026-04-19','2026-04-20','2026-04-21','2026-04-22','2026-04-23','2026-04-24','2026-04-25','2026-04-26','2026-04-27','2026-04-28','2026-04-29'];
 
   // Daily aggregated BTC net TVL
   const btcNetUsd = DATES.map(d => {
@@ -774,7 +774,7 @@ function renderSpark(data) {
   </div>
 </div>
 <div class="chart-wrap">
-  <div class="chart-label">Spark Protocol — Protocol TVL (Multichain, All Assets) · Apr 17 → Apr 27 · DefiLlama</div>
+  <div class="chart-label">Spark Protocol — Protocol TVL (Multichain, All Assets) · Apr 17 → Apr 29 · DefiLlama</div>
   ${buildLineChart(s1Points, ANNOTS_PROTO, { color: '#a78bfa', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
 </div>
 
@@ -803,7 +803,7 @@ function renderSpark(data) {
   </div>
 </div>
 <div class="chart-wrap">
-  <div class="chart-label">Spark Protocol — BTC Collateral Net TVL (Ethereum · WBTC+cbBTC+LBTC+tBTC, Deposits−Borrows) · Apr 17 → Apr 27 · Subgraph</div>
+  <div class="chart-label">Spark Protocol — BTC Collateral Net TVL (Ethereum · WBTC+cbBTC+LBTC+tBTC, Deposits−Borrows) · Apr 17 → Apr 29 · Subgraph</div>
   ${buildLineChart(s2Points, ANNOTS_BTC, { color: '#34d399', yFmt: v => '$' + (v/1e9).toFixed(1) + 'B' })}
 </div>
 
@@ -825,7 +825,7 @@ function renderSpark(data) {
   </tfoot>
 </table>
 <div class="footer">
-  Data sources: Spark Lend Ethereum subgraph (The Graph Network, Messari schema) · DefiLlama protocol/spark (multichain TVL) · On-chain archive RPC (publicnode.com, block 24903024) · Generated Apr 27, 2026 UTC<br>
+  Data sources: Spark Lend Ethereum subgraph (The Graph Network, Messari schema) · DefiLlama protocol/spark (multichain TVL) · On-chain archive RPC (publicnode.com, block 24903024) · Generated Apr 29, 2026 UTC<br>
   Note: Spark BTC collateral INCREASED post-hack — users migrated from Aave. Spark is primarily a DAI/sUSDS lending market; BTC was &lt;1% of pre-hack TVL. LBTC+tBTC pre-hack values verified via on-chain archive RPC (block 24903024 = Apr 18 00:00 UTC).
 </div>`;
 
