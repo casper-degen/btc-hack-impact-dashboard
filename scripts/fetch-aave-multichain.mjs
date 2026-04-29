@@ -356,6 +356,23 @@ function sumAllChainsForDate(chainResults, date) {
   return { btc, usd, borrowsUsd };
 }
 
+function sumAllChainsForDateFull(chainResults, date) {
+  let depositsBtc = 0, depositsUsd = 0, borrowsBtc = 0, borrowsUsd = 0;
+  for (const result of Object.values(chainResults)) {
+    if (result.status !== 'ok') continue;
+    for (const daily of Object.values(result.aggregated)) {
+      const d = daily[date];
+      if (d) {
+        depositsBtc += d.deposits_btc;
+        depositsUsd += d.deposits_usd;
+        borrowsBtc  += d.borrows_btc;
+        borrowsUsd  += d.borrows_usd;
+      }
+    }
+  }
+  return { depositsBtc, depositsUsd, borrowsBtc, borrowsUsd };
+}
+
 async function buildAaveJson(chainResults, btcPrices) {
   console.log('\nBuilding updated aave.json...');
 
@@ -511,9 +528,27 @@ async function buildAaveJson(chainResults, btcPrices) {
       note: 'All-chain per-market BTC data from Aave official subgraphs. USD = BTC × daily BTC/USD (Binance).',
       markets: allMarkets,
     },
+    // Multichain per-day BTC aggregates (deposits - borrows, all chains, all BTC tokens)
+    btcMarketsTimeline: Object.fromEntries(
+      DATE_RANGE
+        .map(date => {
+          const s = sumAllChainsForDateFull(chainResults, date);
+          if (s.depositsBtc <= 0) return null;
+          return [date, {
+            deposits_btc: parseFloat(s.depositsBtc.toFixed(4)),
+            borrows_btc:  parseFloat(s.borrowsBtc.toFixed(4)),
+            net_btc:      parseFloat((s.depositsBtc - s.borrowsBtc).toFixed(4)),
+            deposits_usd: Math.round(s.depositsUsd),
+            borrows_usd:  Math.round(s.borrowsUsd),
+            net_usd:      Math.round(s.depositsUsd - s.borrowsUsd),
+          }];
+        })
+        .filter(Boolean)
+    ),
     // Preserved Ethereum per-market (for backwards compat with existing renderAave)
     perMarketSnapshot_ethereum: existingData.perMarketSnapshot || {},
-    btcDailyTimeline: existingData.btcDailyTimeline || {},
+    // Rebuild Ethereum per-asset daily from fresh fetch (fixes timeline truncation at 4/27)
+    btcDailyTimeline: chainResults['Ethereum']?.aggregated || existingData.btcDailyTimeline || {},
     highlight_cbBTC: existingData.highlight_cbBTC || null,
     highlight_PYUSD: existingData.highlight_PYUSD || null,
     protocolTvlTimeline: existingData.protocolTvlTimeline || [],

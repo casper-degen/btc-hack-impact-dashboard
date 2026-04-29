@@ -366,6 +366,7 @@ function renderAave(data) {
   const km = data.keyMetrics;
   const protTvl = data.protocolTvlTimeline || [];
   const btcTl = data.btcDailyTimeline || {};
+  const btcMl = data.btcMarketsTimeline || {};
   const pms = data.perMarketSnapshot;
   const cb  = data.chainBreakdown || {};
 
@@ -405,8 +406,8 @@ function renderAave(data) {
   const aaveRecoveryBtc   = km.btcMarkets.currentBtc - km.btcMarkets.troughBtc;
   const aaveRecoveryPct   = aaveDropAtTrough > 0 ? (aaveRecoveryBtc / aaveDropAtTrough) * 100 : 0;
 
-  // Section 2 chart: BTC net TVL in native BTC units
-  const s2Points = btcNetUsd.map(e => ({ date: e.date, value: e.netBtc }));
+  // Section 2 chart: multichain BTC net TVL (deposits - borrows) from btcMarketsTimeline
+  const s2Points = DATES.map(d => ({ date: d, value: btcMl[d]?.net_btc ?? null })).filter(p => p.value !== null);
 
   // Section 3 chart 1: total BTC deposits (native)
   const s3BtcPoints = btcDepBtc;
@@ -420,9 +421,9 @@ function renderAave(data) {
     { date: '2026-04-29', label: 'Current', color: '#34d399' },
   ];
   const ANNOTS_BTC = [
-    { date: '2026-04-17', label: 'Pre-Hack', color: '#94a3b8' },
-    { date: '2026-04-24', label: 'Trough', color: '#fbbf24' },
-    { date: '2026-04-29', label: 'Current', color: '#34d399' },
+    { date: km.btcMarkets.preHackDate || '2026-04-17', label: 'Pre-Hack', color: '#94a3b8' },
+    { date: km.btcMarkets.troughDate  || '2026-04-28', label: 'Trough',   color: '#fbbf24' },
+    { date: km.btcMarkets.currentDate || '2026-04-29', label: 'Current',  color: '#34d399' },
   ];
 
   // BTC markets table — filter to isBtc from perMarketSnapshot (multichain), sort by preDepositBtc desc
@@ -502,7 +503,7 @@ function renderAave(data) {
   </div>
 </div>
 <div class="chart-wrap">
-  <div class="chart-label">Aave v3 — BTC Collateral Net TVL (Ethereum · WBTC+cbBTC+tBTC+LBTC, Deposits−Borrows) · Apr 17 → Apr 29 · Subgraph · in BTC</div>
+  <div class="chart-label">Aave v3 — BTC Collateral Net TVL (All chains · all BTC collateral markets, Deposits−Borrows) · Apr 17 → Apr 29 · Subgraph · in BTC</div>
   ${buildLineChart(s2Points, ANNOTS_BTC, { color: '#34d399', yFmt: v => fmtBTC(v) })}
 </div>
 
