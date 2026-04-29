@@ -516,6 +516,7 @@ async function buildAaveJson(chainResults, btcPrices) {
     btcDailyTimeline: existingData.btcDailyTimeline || {},
     highlight_cbBTC: existingData.highlight_cbBTC || null,
     highlight_PYUSD: existingData.highlight_PYUSD || null,
+    protocolTvlTimeline: existingData.protocolTvlTimeline || [],
   };
 
   writeFileSync(DATA_OUT, JSON.stringify(aaveJson, null, 2));

@@ -1438,5 +1438,59 @@
     "dropUsd": -128000000,
     "dropPct": -79.5,
     "context": "PYUSD deposits dropped ~79.5%. Borrowed against BTC-collateral that was liquidated. Source: Messari subgraph snapshot Apr 17–21."
-  }
+  },
+  "protocolTvlTimeline": [
+    {
+      "date": "2026-04-17",
+      "totalUsd": 19501478473
+    },
+    {
+      "date": "2026-04-18",
+      "totalUsd": 19654419822
+    },
+    {
+      "date": "2026-04-19",
+      "totalUsd": 19306418627
+    },
+    {
+      "date": "2026-04-20",
+      "totalUsd": 17901863284
+    },
+    {
+      "date": "2026-04-21",
+      "totalUsd": 16665170630
+    },
+    {
+      "date": "2026-04-22",
+      "totalUsd": 15262498982
+    },
+    {
+      "date": "2026-04-23",
+      "totalUsd": 14440092395
+    },
+    {
+      "date": "2026-04-24",
+      "totalUsd": 13918724520
+    },
+    {
+      "date": "2026-04-25",
+      "totalUsd": 13618317870
+    },
+    {
+      "date": "2026-04-26",
+      "totalUsd": 13484199820
+    },
+    {
+      "date": "2026-04-27",
+      "totalUsd": 13587365430
+    },
+    {
+      "date": "2026-04-28",
+      "totalUsd": 13346254673
+    },
+    {
+      "date": "2026-04-29",
+      "totalUsd": 13188004885
+    }
+  ]
 }
