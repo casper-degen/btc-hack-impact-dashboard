@@ -3,7 +3,7 @@
 // Usage: GRAPH_API_KEY=xxx node scripts/fetch-spark.mjs
 //
 // Chains: Ethereum (main, has WBTC/cbBTC/LBTC/tBTC), Gnosis (no BTC reserves confirmed)
-// Window: Apr 17 → Apr 27, 2026
+// Window: Apr 17 → Apr 29, 2026
 // Schema: Messari standard (markets + marketDailySnapshots), NOT Aave-reserve schema
 
 import { writeFileSync } from 'fs';
@@ -32,10 +32,10 @@ const ETH_BTC_MARKETS = [
 
 // Apr 17 00:00 UTC → Apr 27 23:59 UTC
 const FROM_TS = 1776384000;
-const TO_TS   = 1777334399;
+const TO_TS   = 1777507199;
 
 const DATE_RANGE = [];
-for (let d = new Date('2026-04-17T00:00:00Z'); d <= new Date('2026-04-27T23:59:59Z'); d.setDate(d.getDate() + 1)) {
+for (let d = new Date('2026-04-17T00:00:00Z'); d <= new Date('2026-04-29T23:59:59Z'); d.setDate(d.getDate() + 1)) {
   DATE_RANGE.push(new Date(d).toISOString().slice(0, 10));
 }
 
@@ -104,7 +104,7 @@ async function fetchDefiLlama() {
   const seen = {};
   for (const e of tvlList) {
     const date = new Date(e.date * 1000).toISOString().slice(0, 10);
-    if (date >= '2026-04-17' && date <= '2026-04-27') {
+    if (date >= '2026-04-17' && date <= '2026-04-29') {
       seen[date] = { date, totalUsd: e.totalLiquidityUSD };
     }
   }
@@ -179,7 +179,7 @@ async function main() {
           net_usd:      snap.deposits_usd - snap.borrows_usd,
           source: 'spark-lend-ethereum-subgraph',
         };
-      } else if (date === '2026-04-27') {
+      } else if (date === '2026-04-29') {
         // Use current state for today if no snapshot yet
         const cur = currentBySymbol[m.symbol];
         if (cur) {
@@ -233,7 +233,7 @@ async function main() {
   if (!isFinite(troughBtc)) { troughBtc = 0; troughDate = '2026-04-17'; troughUsd = 0; }
 
   // Current: Apr 27 (or last available)
-  let currentDate = '2026-04-27';
+  let currentDate = '2026-04-29';
   let currentBtc = 0, currentUsd = 0;
   for (const sym of ETH_BTC_MARKETS.map(m => m.symbol)) {
     const cur = currentBySymbol[sym];
@@ -320,7 +320,7 @@ async function main() {
       event: 'Kelp DAO LayerZero Exploit',
       hackDate: '2026-04-18',
       fetchedAt: new Date().toISOString(),
-      dataFreshness: '2026-04-27',
+      dataFreshness: '2026-04-29',
       sources: {
         perMarket: 'Spark Lend Ethereum subgraph (The Graph Network) — per-market BTC data Apr 17–27, 2026',
         protocolTvl: 'DefiLlama API (api.llama.fi/protocol/spark) — multichain protocol TVL',

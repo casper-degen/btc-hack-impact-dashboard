@@ -4,9 +4,9 @@
 //
 // Chains: Ethereum, Polygon, Arbitrum, Optimism, Avalanche, BNB, Base, Scroll, Gnosis, Linea, Metis
 // Sources: Aave official subgraphs (The Graph Network + Metis custom endpoint)
-// Window: Apr 17 → Apr 27, 2026
+// Window: Apr 17 → Apr 29, 2026
 
-import { writeFileSync } from 'fs';
+import { writeFileSync, existsSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -20,10 +20,10 @@ if (!GRAPH_API_KEY) {
 }
 
 const FROM_TS = Math.floor(new Date('2026-04-17T00:00:00Z').getTime() / 1000);
-const TO_TS   = Math.floor(new Date('2026-04-28T00:00:00Z').getTime() / 1000);
+const TO_TS   = Math.floor(new Date('2026-04-30T00:00:00Z').getTime() / 1000);
 
 const DATE_RANGE = [];
-for (let d = new Date('2026-04-17T00:00:00Z'); d <= new Date('2026-04-27T23:59:59Z'); d.setDate(d.getDate() + 1)) {
+for (let d = new Date('2026-04-17T00:00:00Z'); d <= new Date('2026-04-29T23:59:59Z'); d.setDate(d.getDate() + 1)) {
   DATE_RANGE.push(new Date(d).toISOString().slice(0, 10));
 }
 
@@ -360,7 +360,7 @@ async function buildAaveJson(chainResults, btcPrices) {
   console.log('\nBuilding updated aave.json...');
 
   const preHackDate  = '2026-04-17';
-  const currentDate  = '2026-04-27';
+  const currentDate  = '2026-04-29';
   const pre          = sumAllChainsForDate(chainResults, preHackDate);
   const current      = sumAllChainsForDate(chainResults, currentDate);
 
